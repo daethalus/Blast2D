@@ -1,9 +1,9 @@
-﻿# CMakeList.txt : Top-level CMake project file, do global configuration
-# and include sub-projects here.
-#
-cmake_minimum_required (VERSION 3.8)
+﻿cmake_minimum_required (VERSION 3.8)
 
 project ("Blast2D")
 
-# Include sub-projects.
+include_directories("Blast2D")
+
 add_subdirectory ("Blast2D")
+
+target_compile_features("Blast2D" PRIVATE cxx_std_17)
