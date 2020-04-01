@@ -4,8 +4,6 @@
 #include <string>
 #include <unordered_map>
 
-#include <ecs/entity_set.hpp>
-
 namespace Blast2D {
 	using Component = std::uint32_t;
 
@@ -14,23 +12,8 @@ namespace Blast2D {
 		Component index;
 		std::size_t id;
 		std::string name;
-
-		//template <typename T>
-		//T operator[] (std::string name) {
-		//	auto T::* asd;
-		//	return asd;
-		//}
 	};
 
-	class ComponentDataPool {
-		EntitySet dataSet;
-	};
-
-
-	template <typename Type>
-	class ComponentDataPoolHandler : public EntitySet {
-
-	};
 
 	class ComponentRegister {
 	private:
@@ -43,6 +26,10 @@ namespace Blast2D {
 		void registerNewComponent(ComponentInfo& info) {
 			info.index = index++;
 			components[info.id] = info;
+		}
+
+		ComponentInfo get(std::size_t id) {
+			return components[id];
 		}
 	};
 }

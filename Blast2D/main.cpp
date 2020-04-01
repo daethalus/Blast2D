@@ -1,5 +1,6 @@
 #include <iostream>
 #include <logging/easylogging++.h>
+#include <logging/chronometer.hpp>
 #include <ecs/entity_manager.hpp>
 
 INITIALIZE_EASYLOGGINGPP
@@ -22,15 +23,21 @@ int main() {
 
 	auto entity = entityManager.createEntity();
 
-	entityManager.addComponentData<Test>(entity, 1 );
-	//auto& test, auto& position
-	entityManager.view<Test, Position>().each([]() {
-		LOG(INFO) << "each";
-	});
-	
-	//entityManager.each([](Test &test, Position &position) {
-	//	LOG(INFO) << test.test;
-	//});
+	auto chrono = Blast2D::Chronometer::create();
+
+	chrono.lap();
+
+	chrono.lap();
+
+	chrono.lap();
+
+	chrono.end();
+
+	entityManager.assign<Test>(entity,{ 20 });
+
+	auto test = entityManager.get<Test>(entity);	   
+
+	LOG(INFO) << test.test;
 	
 
 	LOG(INFO) << entity;

@@ -8,10 +8,9 @@ namespace Blast2D {
 	constexpr auto ENTITY_NULL_ID = UINT_MAX;
 
 	using Entity = std::uint32_t;
-	using BasicEntityView = std::vector<Entity>;
+	using BasicView = std::vector<Entity>;
 
 	class EntityPool {
-
 	public:
 		std::vector<Entity> freeEntitities;
 		Entity counter;

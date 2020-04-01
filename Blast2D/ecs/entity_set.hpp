@@ -59,7 +59,7 @@ namespace Blast2D {
 			entities[entity] = ENTITY_NULL_ID;
 			internalRemove(id, entity);
 		}
-		virtual BasicEntityView view() {
+		virtual BasicView view() {
 			return entities;
 		}
 
