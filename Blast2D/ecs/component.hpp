@@ -7,11 +7,39 @@
 namespace Blast2D {
 	using Component = std::uint32_t;
 
+	template <typename T>
+	class Store {
+
+	};
+
+	class Data {
+	public:
+		template <typename T>
+		Data& operator=(T&& other)& {
+			auto asd = Store<T>();
+			return *this;
+		}
+		template <typename T>
+		void value(T value) {
+
+		}
+	};
+
 	class ComponentInfo {
 	public:
 		Component index;
 		std::size_t id;
 		std::string name;
+
+		std::unordered_map <std::string, Data> atributues;
+
+		Data& operator[] (std::string name) {
+			auto it = atributues.find(name);
+			if (it == atributues.end()) {
+				atributues[name] = {};
+			}
+			return atributues[name];
+		}
 	};
 
 

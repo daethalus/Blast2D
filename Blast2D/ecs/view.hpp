@@ -10,7 +10,6 @@ namespace Blast2D {
 
 		template<typename Func>
 		EntityView each(Func func) {
-
 			func();
 			return *this;
 		}

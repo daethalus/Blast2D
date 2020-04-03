@@ -90,8 +90,8 @@ namespace Blast2D {
 		template <typename Type>
 		Component getComponent() {
 			return componentRegister.get(typeid(Type).hash_code()).index;			
-		}
-		
+		}		
+
 		template <typename Type>
 		void assign(Entity entity, Type instance) {
 			auto comp = getComponent<Type>();
@@ -100,8 +100,54 @@ namespace Blast2D {
 		}
 
 		template <typename Type>
+		void assign(Entity entity, Component comp, Type instance) {			
+			this->assure<Type>(comp).assign(entity, instance);
+		}
+
+		template <typename Type>
 		Type& get(Entity entity) {					
 			return this->assure<Type>(getComponent<Type>()).get(entity);
+		}
+
+		template <typename T>
+		void listComponents(std::vector<Component>& vcomp, T component) {
+			vcomp.push_back(component);
+		}
+
+		template <typename T, typename... Args>
+		void listComponents(std::vector<Component>& vcomp, T component, Args... components) {
+			vcomp.push_back(component);
+			listComponents(vcomp, components...);
+		}
+
+		template<typename... Components>
+		typename std::enable_if<sizeof...(Components) == 0>::type find(std::vector<Component>& componentIds) {
+		}
+
+
+		template<typename Type, typename... Components>
+		void find(std::vector<Component>& componentIds) {
+			componentIds.push_back(getComponent<Type>());
+			find<Components...>(componentIds);
+		}
+
+		template <typename... Components>
+		const BasicView view() {
+			std::vector<Component> componentIds;
+			find<Components...>(componentIds);
+			return internalView(componentIds);
+		}
+
+
+		template <typename... Args>
+		BasicView view(Args... components) {
+			std::vector<Component> comps;
+			listComponents(comps, components...);
+			return internalView(comps);
+		}
+
+		BasicView view(std::vector<Component> comps) {
+			return internalView(comps);
 		}
 	};
 }
