@@ -13,23 +13,33 @@ struct Position {
 	int x;
 };
 
+struct Velocity {
+	int y;
+};
+
 namespace ci {
-	auto position = Blast2D::EntityManager::component<Position>("Position");
+	Blast2D::CompInfo position;
 }
 
+
+
+
 int main() {
+
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
-	auto info = ci::position;
+	ci::position = entityManager.createComponent<Position>("Position");
 
-	auto storage = Blast2D::Storage<Position>();	
-	storage.assign(1, {10});
+	auto chrono = Blast2D::Chronometer::create();
 
-	auto pos = storage.get(1);
+	for (int x = 999999; x>= 0; --x) {
+		auto entity = entityManager.create();
+		entityManager.set<Position>(ci::position, entity, Position{ 10 });
+	}
 
-	storage.destroy(1);
+	chrono.end();
+	
 
-	storage.get(1);
 
-	LOG(INFO) << info;
+	LOG(INFO) << ci::position;
 }

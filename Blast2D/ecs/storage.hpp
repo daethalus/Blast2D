@@ -10,21 +10,21 @@ namespace Blast2D {
 
 	template <typename Type>
 	class Storage : public SparseSet {
-	public:		
-		void assign(Entity entity, Type type) {
+	public:
+		void set(Entity entity, Type & type) {
 			if constexpr (std::is_aggregate_v<Type>) {
-				instances.push_back(type);
+				instances.push_back(std::move(type));
 			} else {
-				instances.emplace_back(type);
+				instances.emplace_back(std::move(type));
 			}
-			SparseSet::emplace(entity);				
+			SparseSet::emplace(entity);
 		}
 
 		void destroy(const Entity entity) {
 			auto other = std::move(instances.back());
 			instances[this->index(entity)] = std::move(other);
 			instances.pop_back();
-			SparseSet::destroy(entity);			
+			SparseSet::destroy(entity);
 		}
 
 		Type& get(const Entity entity) {

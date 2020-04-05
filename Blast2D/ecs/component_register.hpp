@@ -3,32 +3,19 @@
 
 #include <string>
 #include <iostream>
+#include <vector>
 
 namespace Blast2D {
 
-	using Component = std::uint32_t;
-
 	struct CompInfo {
-		std::string name;
-		Component component;
+		std::size_t index;
+		std::string name;		
 
 		friend std::ostream& operator<<(std::ostream& os, CompInfo info) {
-			os << "name: " << info.name << " id: " << info.component;
+			os << "name: " << info.name << " index: " << info.index;
 			return os;
 		}
-	};
-
-
-	class ComponentRegister {
-	private:
-		static Component index;
-	public:
-		template<typename Type>
-		static CompInfo create(std::string name) {
-			return { name, index++ };
-		}
-	};
-	Component ComponentRegister::index = 0;
+	};	
 }
 
 #endif // !ECS_COMPONENT_REGISTER_HPP

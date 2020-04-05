@@ -54,9 +54,13 @@ namespace Blast2D {
 			direct.pop_back();
 		}
 
+		bool has(const Entity entity) const {
+			const auto curr = page(entity);
+			return (curr < reverse.size() && reverse[curr] && reverse[curr][offset(entity)] != NULL_ID);
+		}
+
 
 	private:
-		std::uint32_t counter = 0;
 		std::vector<std::unique_ptr<Entity[]>> reverse;
 		std::vector<Entity> direct;
 	};
