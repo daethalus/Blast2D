@@ -42,7 +42,7 @@ namespace Blast2D {
 
 		void emplace(const Entity entity) {
 			assure(page(entity))[offset(entity)] = direct.size();
-			direct.push_back(entity);
+			direct.emplace_back(entity);
 		}
 
 		void destroy(const Entity entity) {			
@@ -57,6 +57,13 @@ namespace Blast2D {
 		bool has(const Entity entity) const {
 			const auto curr = page(entity);
 			return (curr < reverse.size() && reverse[curr] && reverse[curr][offset(entity)] != NULL_ID);
+		}
+		std::size_t size() {
+			return direct.size();
+		}
+
+		std::vector<Entity>& data() {
+			return direct;
 		}
 
 

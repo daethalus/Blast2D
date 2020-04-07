@@ -6,6 +6,10 @@
 #include <ecs/storage.hpp>
 #include <functional>
 
+#include <queue>
+
+#include "entt.hpp"
+
 INITIALIZE_EASYLOGGINGPP
 
 
@@ -17,29 +21,33 @@ struct Velocity {
 	int y;
 };
 
-namespace ci {
-	Blast2D::CompInfo position;
-}
-
-
-
 
 int main() {
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
-	ci::position = entityManager.createComponent<Position>("Position");
+	entityManager.createComponent<Position>();
+	entityManager.createComponent<Velocity>();
+
+	entt::registry reg;
 
 	auto chrono = Blast2D::Chronometer::create();
 
-	for (int x = 999999; x>= 0; --x) {
+	for (int x = 999999; x >= 0; --x) {
 		auto entity = entityManager.create();
-		entityManager.set<Position>(ci::position, entity, Position{ 10 });
-	}
+		entityManager.set<Position>(entity, {x});
+		entityManager.set<Velocity>(entity, {x});
+	}	   
+
+	chrono.lap();
+
+	entityManager.forEach<Position, Velocity>([](auto& position, auto& velocity) {
+		LOG(INFO) << position.x;
+	});
+
 
 	chrono.end();
-	
 
-
-	LOG(INFO) << ci::position;
+	std::string aaa;
+	std::cin >> aaa;
 }

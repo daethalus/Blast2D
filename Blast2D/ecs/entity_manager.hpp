@@ -7,36 +7,28 @@
 #include <ecs/component_register.hpp>
 #include <ecs/sparse_set.hpp>
 #include <ecs/storage.hpp>
+#include <ecs/view.hpp>
 
 
 namespace Blast2D {
-
-	struct PoolData {
-		CompInfo info;
-		std::unique_ptr<SparseSet> pool{};
-	};
-
 
 	class EntityManager {
 	private:
 
 		EntityIdPool entityIdPool;
 
-
 		mutable std::vector<PoolData> pools{};
 
 		template<typename Type>
-		Storage<Type>& assure(CompInfo info) {
-			return static_cast<Storage<Type>&>(*pools[info.index].pool);
+		Storage<Type>& assure() const {
+			return static_cast<Storage<Type>&>(*pools[TypeInfo<Type>::index(0)].pool);
 		}
-		
-	public:		
 
+	public:
 		template<typename Type>
-		CompInfo createComponent(std::string name) {
-			auto info = CompInfo{ pools.size(), name };			
-			pools.push_back({ info, std::unique_ptr<SparseSet>{new Storage<Type>()}});
-			return info;
+		void createComponent() {
+			TypeInfo<Type>::index(pools.size());
+			pools.push_back({std::unique_ptr<SparseSet>{new Storage<Type>()}});
 		}
 
 		Entity create() {
@@ -53,19 +45,23 @@ namespace Blast2D {
 		}
 
 		template<typename Type>
-		void set(CompInfo info, Entity entity, Type& type) {
-			this->assure<Type>(info).set(entity, type);
+		void set(const Entity entity, Type type) {
+			this->assure<Type>().set(entity, type);
 		}
 
 		template<typename Type>
-		Type& get(CompInfo info, Entity entity) {
-			this->assure<Type>(info).get(entity);
+		Type& get(const Entity entity) {
+			return this->assure<Type>().get(entity);
 		}
 
+		template<typename Type>
+		void remove(const Entity entity) {
+			this->assure<Type>().destroy(entity);
+		}
 
-
-		void remove(CompInfo info, Entity entity) {
-
+		template<typename ...Types, typename Func>
+		void forEach(Func func) {
+			std::apply(func, std::make_tuple(assure<Types>().get(1)...));
 		}
 	};
 	

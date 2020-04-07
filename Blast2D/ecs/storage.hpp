@@ -8,10 +8,15 @@
 
 namespace Blast2D {
 
+	struct PoolData {
+		std::unique_ptr<SparseSet> pool{};		
+	};
+
+
 	template <typename Type>
 	class Storage : public SparseSet {
 	public:
-		void set(Entity entity, Type & type) {
+		void set(const Entity entity, Type & type) {
 			if constexpr (std::is_aggregate_v<Type>) {
 				instances.push_back(std::move(type));
 			} else {

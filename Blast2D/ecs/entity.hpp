@@ -11,6 +11,7 @@ namespace Blast2D {
 	class EntityIdPool {
 
 	public:
+		std::vector<Entity> entities;
 		std::vector<Entity> freeIds;
 		Entity counter;
 
@@ -18,12 +19,14 @@ namespace Blast2D {
 			counter = 0;
 		}
 		Entity generateId() {
-			if (freeIds.size() > 0) {
-				auto id = freeIds.back();
-				freeIds.pop_back();
-				return id;
+			if (freeIds.size() == 0) {
+				++counter;
+				entities.emplace_back(counter);
+			} else {
+				entities.emplace_back(std::move(freeIds.back()));
+				freeIds.pop_back();				
 			}
-			return counter++;
+			return entities.back();
 		}
 
 		void freeEntity(Entity entity) {

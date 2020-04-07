@@ -7,15 +7,16 @@
 
 namespace Blast2D {
 
-	struct CompInfo {
-		std::size_t index;
-		std::string name;		
+	using Index = std::size_t;
 
-		friend std::ostream& operator<<(std::ostream& os, CompInfo info) {
-			os << "name: " << info.name << " index: " << info.index;
-			return os;
+	template<typename Type>
+	struct TypeInfo {
+		static Index index(Index index) {
+			static const Index constIndex = index;
+			return constIndex;
 		}
-	};	
+	};
+	
 }
 
 #endif // !ECS_COMPONENT_REGISTER_HPP
