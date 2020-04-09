@@ -22,7 +22,7 @@ struct Velocity {
 };
 
 
-int main() {
+int main() {	
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
@@ -35,7 +35,8 @@ int main() {
 
 	for (int x = 999999; x >= 0; --x) {
 		auto entity = entityManager.create();
-		entityManager.set<Position>(entity, {x});
+		entityManager.set<Position>(entity, { x });
+		//entityManager.add<Position(entity, "EntityPos", {x})
 		entityManager.set<Velocity>(entity, {x});
 	}	   
 

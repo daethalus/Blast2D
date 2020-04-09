@@ -6,12 +6,13 @@
 #include <ecs/sparse_set.hpp>
 #include <type_traits>
 
+#include <string>
+
 namespace Blast2D {
 
 	struct PoolData {
 		std::unique_ptr<SparseSet> pool{};		
 	};
-
 
 	template <typename Type>
 	class Storage : public SparseSet {
