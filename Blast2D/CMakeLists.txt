@@ -6,3 +6,5 @@ add_subdirectory(logging)
 add_executable (Blast2D "main.cpp" "entt.hpp" project.rc)
 
 target_link_libraries(Blast2D logging-lib)
+
+target_compile_features("Blast2D" PRIVATE cxx_std_17)

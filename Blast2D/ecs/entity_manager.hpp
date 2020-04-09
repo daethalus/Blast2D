@@ -61,7 +61,8 @@ namespace Blast2D {
 
 		template<typename ...Types, typename Func>
 		void forEach(Func func) {
-			std::apply(func, std::make_tuple(assure<Types>().get(1)...));
+            auto tuple = std::make_tuple(assure<Types>().get(1)...);
+			std::apply(func, tuple);
 		}
 	};
 	

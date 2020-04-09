@@ -5,7 +5,7 @@
 
 namespace Blast2D {
 	using Entity = std::uint32_t;
-	constexpr auto NULL_ID = UINT_MAX;
+	constexpr auto NULL_ID = WINT_MAX;
 
 
 	class EntityIdPool {

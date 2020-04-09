@@ -42,6 +42,8 @@ int main() {
 
 	chrono.lap();
 
+    LOG(INFO) << "position.x";
+
 	entityManager.forEach<Position, Velocity>([](auto& position, auto& velocity) {
 		LOG(INFO) << position.x;
 	});
