@@ -31,6 +31,12 @@ namespace Blast2D {
 			pools.push_back({std::unique_ptr<SparseSet>{new Storage<Type>()}});
 		}
 
+		template<typename Type>
+		void createContainer() {
+			TypeInfo<Type>::index(pools.size());
+			pools.push_back({ std::unique_ptr<SparseSet>{new Storage<Type>()} });
+		}
+
 		Entity create() {
 			return entityIdPool.generateId();
 		}

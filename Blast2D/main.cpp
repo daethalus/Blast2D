@@ -6,6 +6,8 @@
 #include <ecs/storage.hpp>
 #include <functional>
 
+#include <system/thread_pool.hpp>
+
 #include <queue>
 
 INITIALIZE_EASYLOGGINGPP
@@ -20,26 +22,38 @@ struct Velocity {
 };
 
 
-int main() {
+int main() {	
+
+	ThreadPool tp;
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
 	entityManager.createComponent<Position>();
-	entityManager.createComponent<Velocity>();
+	entityManager.createComponent<Velocity>();	
 
 	auto chrono = Blast2D::Chronometer::create();
 
-	for (int x = 20; x >= 0; --x) {
+	for (int x = 999999; x >= 0; --x) {
 		auto entity = entityManager.create();
-		entityManager.set<Position>(entity, {x});
-		entityManager.set<Velocity>(entity, {x});
+		entityManager.set<Position>(entity, { x });
+		entityManager.set<Velocity>(entity, { x });		
 	}
+	long long a = 0;
 
 	chrono.lap();
 
-	entityManager.forEach<Position, Velocity>([](auto position, auto velocity) {
-		LOG(INFO) << position.x;		
+	tp.addTask([&entityManager, &a]() {
+		for (int x = 9999999; x >= 0; --x) {
+			a = a * x;
+		}
 	});
+
+	chrono.lap();
+
+	entityManager.forEach<Position, Velocity>([](auto& position, auto& velocity) {
+		//LOG(INFO) << position.x;		
+	});
+
 
 
 	chrono.end();
