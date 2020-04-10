@@ -12,7 +12,7 @@ namespace Blast2D {
 
 	struct LapInfo{
 		std::string name;
-		long time;
+		long long time;
 	};
 
 	class Chronometer {
