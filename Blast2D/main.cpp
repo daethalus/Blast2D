@@ -8,8 +8,6 @@
 
 #include <queue>
 
-#include "entt.hpp"
-
 INITIALIZE_EASYLOGGINGPP
 
 
@@ -22,30 +20,25 @@ struct Velocity {
 };
 
 
-int main() {	
+int main() {
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
 	entityManager.createComponent<Position>();
 	entityManager.createComponent<Velocity>();
 
-	entt::registry reg;
-
 	auto chrono = Blast2D::Chronometer::create();
 
-	for (int x = 999999; x >= 0; --x) {
+	for (int x = 20; x >= 0; --x) {
 		auto entity = entityManager.create();
-		entityManager.set<Position>(entity, { x });
-		//entityManager.add<Position(entity, "EntityPos", {x})
+		entityManager.set<Position>(entity, {x});
 		entityManager.set<Velocity>(entity, {x});
-	}	   
+	}
 
 	chrono.lap();
 
-    LOG(INFO) << "position.x";
-
-	entityManager.forEach<Position, Velocity>([](auto& position, auto& velocity) {
-		LOG(INFO) << position.x;
+	entityManager.forEach<Position, Velocity>([](auto position, auto velocity) {
+		LOG(INFO) << position.x;		
 	});
 
 

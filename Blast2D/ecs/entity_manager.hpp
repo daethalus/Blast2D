@@ -59,10 +59,22 @@ namespace Blast2D {
 			this->assure<Type>().destroy(entity);
 		}
 
+		template<typename T>
+		constexpr std::size_t tupleSize(T t) {
+			return std::tuple_size<T>::value;
+		}
+
 		template<typename ...Types, typename Func>
 		void forEach(Func func) {
-            auto tuple = std::make_tuple(assure<Types>().get(1)...);
-			std::apply(func, tuple);
+			auto viewPools = std::make_tuple(&assure<Types>()...);
+			auto firstPool = std::get<0>(viewPools);
+			for (const auto entity: firstPool->data()) {
+				if ((std::get<Storage<Types>*>(viewPools)->has(entity) && ...)) {
+					//auto tuple = std::make_tuple(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+					//std::apply(func, tuple);
+					func(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+				}
+			}
 		}
 	};
 	

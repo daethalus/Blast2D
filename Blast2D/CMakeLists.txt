@@ -3,7 +3,7 @@
 
 add_subdirectory(logging)
 
-add_executable (Blast2D "main.cpp" "entt.hpp" project.rc)
+add_executable (Blast2D "main.cpp" project.rc)
 
 target_link_libraries(Blast2D logging-lib)
 
