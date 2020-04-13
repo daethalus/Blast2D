@@ -21,40 +21,57 @@ struct Velocity {
 	int y;
 };
 
+struct Container {
+	int z;
+};
 
-int main() {	
 
-	ThreadPool tp;
+int main() {
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
 	entityManager.createComponent<Position>();
 	entityManager.createComponent<Velocity>();	
+	auto containerIndex1 = entityManager.runtimeComponent<Container>();
+	auto containerIndex2 = entityManager.runtimeComponent<Container>();
 
 	auto chrono = Blast2D::Chronometer::create();
 
-	for (int x = 999999; x >= 0; --x) {
+	for (int x = 99999; x >= 0; --x) {
 		auto entity = entityManager.create();
 		entityManager.set<Position>(entity, { x });
-		entityManager.set<Velocity>(entity, { x });		
+		//entityManager.set<Velocity>(entity, { x });		
+		//entityManager.set<Container>(containerIndex1, entity, { 10 });
+		entityManager.set<Container>(containerIndex2, entity, { 10 });
 	}
-	long long a = 0;
+
+	chrono.lap();
+	long long value = 0;
+
+	entityManager.forEach<Position, Velocity>([&value](auto& position, auto& velocity) {
+		value++;
+		//LOG(INFO) << position.x;
+	});
+
+	LOG(INFO) << value;
+
+	value = 0;
 
 	chrono.lap();
 
-	tp.addTask([&entityManager, &a]() {
-		for (int x = 9999999; x >= 0; --x) {
-			a = a * x;
-		}
-	});
+	auto lambda = [&entityManager, &value](auto entity){
+		auto& position = entityManager.get<Position>(entity);		
+		value++;
+	};
 
-	chrono.lap();
+	std::vector<Blast2D::Index> comps;
 
-	entityManager.forEach<Position, Velocity>([](auto& position, auto& velocity) {
-		//LOG(INFO) << position.x;		
-	});
+	comps.push_back(Blast2D::TypeInfo<Position>::index());	
+	comps.push_back(containerIndex2);
 
+	entityManager.runtimeView(lambda, comps);
 
+	LOG(INFO) << value;
 
 	chrono.end();
 

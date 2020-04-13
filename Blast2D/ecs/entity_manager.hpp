@@ -24,11 +24,23 @@ namespace Blast2D {
 			return static_cast<Storage<Type>&>(*pools[TypeInfo<Type>::index(0)].pool);
 		}
 
+		template<typename Type>
+		Storage<Type>& assure(const Index index) const {
+			return static_cast<Storage<Type>&>(*pools[index].pool);
+		}
+
 	public:
 		template<typename Type>
 		void createComponent() {
 			TypeInfo<Type>::index(pools.size());
 			pools.push_back({std::unique_ptr<SparseSet>{new Storage<Type>()}});
+		}
+
+		template<typename Type>
+		Index runtimeComponent() {
+			auto size = pools.size();
+			pools.push_back({ std::unique_ptr<SparseSet>{new Storage<Type>()} });
+			return size;
 		}
 
 		template<typename Type>
@@ -56,13 +68,28 @@ namespace Blast2D {
 		}
 
 		template<typename Type>
+		void set(const Index index, const Entity entity, Type type) {
+			this->assure<Type>(index).set(entity, type);
+		}
+
+		template<typename Type>
 		Type& get(const Entity entity) {
 			return this->assure<Type>().get(entity);
 		}
 
 		template<typename Type>
+		Type& get(const Index index, const Entity entity) {
+			return this->assure<Type>(index).get(entity);
+		}
+
+		template<typename Type>
 		void remove(const Entity entity) {
 			this->assure<Type>().destroy(entity);
+		}
+
+		template<typename Type>
+		void remove(const Index index, const Entity entity) {
+			this->assure<Type>(index).destroy(entity);
 		}
 
 		template<typename T>
@@ -81,6 +108,24 @@ namespace Blast2D {
 					func(std::get<Storage<Types>*>(viewPools)->get(entity)...);
 				}
 			}
+		}
+		template<typename ...Args, typename Func>
+		void runtimeView(Func func, Args ...args) {
+			std::vector<Index> components = { args... };
+			view(std::move(func), std::move(components));
+		}
+		template<typename Func>
+		void runtimeView(Func func, std::vector<Index> components) {
+			for (const auto entity : pools[components[0]].pool->data()) {
+				bool contains = true;
+				for (auto i = components.size() - 1; i > 0; --i) {
+					if (!pools[components[i]].pool->has(entity)) {
+						contains = false;
+						break;
+					}
+				}
+				if (contains) func(entity);
+			}						
 		}
 	};
 	

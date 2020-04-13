@@ -15,8 +15,11 @@ namespace Blast2D {
 			static const Index constIndex = index;
 			return constIndex;
 		}
+		static Index index() {
+			return index(0);
+		}
+
 	};
-	
 }
 
 #endif // !ECS_COMPONENT_REGISTER_HPP
