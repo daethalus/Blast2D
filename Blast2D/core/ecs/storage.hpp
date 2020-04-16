@@ -2,8 +2,8 @@
 #define ECS_STORAGE_HPP
 
 #include <vector>
-#include <ecs/entity.hpp>
-#include <ecs/sparse_set.hpp>
+#include <core/ecs/entity.hpp>
+#include <core/ecs/sparse_set.hpp>
 #include <type_traits>
 
 #include <string>

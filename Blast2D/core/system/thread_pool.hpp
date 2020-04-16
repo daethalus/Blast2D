@@ -9,7 +9,7 @@
 #include <queue>
 #include <condition_variable>
 
-#include <logging/easylogging++.h>
+#include <core/logging/easylogging++.h>
 
 namespace Blast2D {
 	class ThreadPool {

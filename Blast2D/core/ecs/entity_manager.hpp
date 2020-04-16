@@ -4,10 +4,10 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
-#include <ecs/component_register.hpp>
-#include <ecs/sparse_set.hpp>
-#include <ecs/storage.hpp>
-#include <ecs/view.hpp>
+#include <core/ecs/component_register.hpp>
+#include <core/ecs/sparse_set.hpp>
+#include <core/ecs/storage.hpp>
+#include <core/ecs/view.hpp>
 
 
 namespace Blast2D {

@@ -1,13 +1,16 @@
 #include <iostream>
-#include <logging/easylogging++.h>
-#include <logging/chronometer.hpp>
-#include <ecs/entity_manager.hpp>
-#include <ecs/sparse_set.hpp>
-#include <ecs/storage.hpp>
+#include <core/logging/easylogging++.h>
+#include <core/logging/chronometer.hpp>
+#include <core/ecs/entity_manager.hpp>
+#include <core/ecs/sparse_set.hpp>
+#include <core/ecs/storage.hpp>
 #include <functional>
 #include <thread>
 
-#include <system/thread_pool.hpp>
+#include <core/system/thread_pool.hpp>
+#include <core/system/system.hpp>
+#include <core/system/system_manager.hpp>
+#include <modules/graphics/system/window_system.hpp>
 
 #include <queue>
 
@@ -27,6 +30,11 @@ struct Container {
 
 
 int main() {
+
+	Blast2D::SystemManager sm;
+
+	sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
+	
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
@@ -73,6 +81,8 @@ int main() {
 	LOG(INFO) << value;
 
 	chrono.end();
+
+	sm.update(entityManager);
 
 	std::string aaa;
 	std::cin >> aaa;

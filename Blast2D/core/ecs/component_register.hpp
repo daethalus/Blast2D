@@ -22,4 +22,4 @@ namespace Blast2D {
 	};
 }
 
-#endif // !ECS_COMPONENT_REGISTER_HPP
+#endif

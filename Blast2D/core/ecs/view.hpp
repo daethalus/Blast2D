@@ -1,8 +1,8 @@
 #define ECS_VIEW_HPP
 
 #include <vector>
-#include <ecs/component_register.hpp>
-#include <ecs/storage.hpp>
+#include <core/ecs/component_register.hpp>
+#include <core/ecs/storage.hpp>
 
 namespace Blast2D {
 

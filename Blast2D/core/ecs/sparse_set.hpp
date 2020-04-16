@@ -4,7 +4,7 @@
 #include <vector>
 #include <memory>
 
-#include <ecs/entity.hpp>
+#include <core/ecs/entity.hpp>
 
 namespace Blast2D {
 
