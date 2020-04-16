@@ -53,6 +53,11 @@ namespace Blast2D {
 			return entityIdPool.generateId();
 		}
 
+		template<typename Func>
+		void all(Entity entity, Func func) {
+
+		}
+
 		void destroy(Entity entity) {
 			for (auto pos = pools.size(); pos; --pos) {
 				if (auto& pdata = pools[pos - 1]; pdata.pool->has(entity)) {
@@ -92,11 +97,6 @@ namespace Blast2D {
 			this->assure<Type>(index).destroy(entity);
 		}
 
-		template<typename T>
-		constexpr std::size_t tupleSize(T t) {
-			return std::tuple_size<T>::value;
-		}
-
 		template<typename ...Types, typename Func>
 		void forEach(Func func) {
 			auto viewPools = std::make_tuple(&assure<Types>()...);
@@ -109,6 +109,7 @@ namespace Blast2D {
 				}
 			}
 		}
+		
 		template<typename ...Args, typename Func>
 		void runtimeView(Func func, Args ...args) {
 			std::vector<Index> components = { args... };

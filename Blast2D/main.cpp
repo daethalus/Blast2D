@@ -5,13 +5,13 @@
 #include <ecs/sparse_set.hpp>
 #include <ecs/storage.hpp>
 #include <functional>
+#include <thread>
 
 #include <system/thread_pool.hpp>
 
 #include <queue>
 
 INITIALIZE_EASYLOGGINGPP
-
 
 struct Position {
 	int x;
@@ -37,7 +37,7 @@ int main() {
 
 	auto chrono = Blast2D::Chronometer::create();
 
-	for (int x = 99999; x >= 0; --x) {
+	for (int x = 99; x >= 0; --x) {
 		auto entity = entityManager.create();
 		entityManager.set<Position>(entity, { x });
 		//entityManager.set<Velocity>(entity, { x });		
@@ -48,11 +48,10 @@ int main() {
 	chrono.lap();
 	long long value = 0;
 
-	entityManager.forEach<Position, Velocity>([&value](auto& position, auto& velocity) {
-		value++;
-		//LOG(INFO) << position.x;
-	});
 
+	entityManager.forEach<Position>([&value](auto& position) {
+	});
+	
 	LOG(INFO) << value;
 
 	value = 0;
@@ -60,13 +59,13 @@ int main() {
 	chrono.lap();
 
 	auto lambda = [&entityManager, &value](auto entity){
-		auto& position = entityManager.get<Position>(entity);		
+		auto& position = entityManager.get<Position>(entity);
 		value++;
 	};
 
 	std::vector<Blast2D::Index> comps;
 
-	comps.push_back(Blast2D::TypeInfo<Position>::index());	
+	comps.push_back(Blast2D::TypeInfo<Position>::index());
 	comps.push_back(containerIndex2);
 
 	entityManager.runtimeView(lambda, comps);
