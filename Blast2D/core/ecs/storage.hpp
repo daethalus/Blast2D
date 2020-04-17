@@ -36,6 +36,9 @@ namespace Blast2D {
 		Type& get(const Entity entity) {
 			return instances[this->index(entity)];
 		}
+		Type& back() {
+			return instances[SparseSet::back()];
+		}
 
 	private:
 		std::vector<Type> instances;

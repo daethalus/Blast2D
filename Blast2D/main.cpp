@@ -1,18 +1,23 @@
 #include <iostream>
+#include <functional>
+#include <thread>
+#include <queue>
+#include <chrono>
+#include <thread>
+
 #include <core/logging/easylogging++.h>
 #include <core/logging/chronometer.hpp>
 #include <core/ecs/entity_manager.hpp>
 #include <core/ecs/sparse_set.hpp>
 #include <core/ecs/storage.hpp>
-#include <functional>
-#include <thread>
+#include <core/components/application.hpp>
 
 #include <core/system/thread_pool.hpp>
 #include <core/system/system.hpp>
 #include <core/system/system_manager.hpp>
-#include <modules/graphics/system/window_system.hpp>
 
-#include <queue>
+#include <modules/graphics/system/window_system.hpp>
+#include <modules/graphics/components/window.hpp>
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -38,19 +43,28 @@ int main() {
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager entityManager;
+
 	entityManager.createComponent<Position>();
 	entityManager.createComponent<Velocity>();	
+	entityManager.createComponent<Blast2D::WindowProperties>();
+	entityManager.createComponent<Blast2D::WindowHandler>();
+	entityManager.createComponent<Blast2D::Application>();
+	
 	auto containerIndex1 = entityManager.runtimeComponent<Container>();
 	auto containerIndex2 = entityManager.runtimeComponent<Container>();
+
+	entityManager.create(
+		Blast2D::WindowProperties{}
+	);
+
+	entityManager.create(
+		Blast2D::Application{ true }
+	);
 
 	auto chrono = Blast2D::Chronometer::create();
 
 	for (int x = 99; x >= 0; --x) {
-		auto entity = entityManager.create();
-		entityManager.set<Position>(entity, { x });
-		//entityManager.set<Velocity>(entity, { x });		
-		//entityManager.set<Container>(containerIndex1, entity, { 10 });
-		entityManager.set<Container>(containerIndex2, entity, { 10 });
+		entityManager.create(Position{ x }, Velocity{ x * 2 });
 	}
 
 	chrono.lap();
@@ -82,8 +96,9 @@ int main() {
 
 	chrono.end();
 
-	sm.update(entityManager);
-
-	std::string aaa;
-	std::cin >> aaa;
+	sm.create(entityManager);
+	auto& application = entityManager.last<Blast2D::Application>();
+	do {		
+		sm.update(entityManager);		
+	} while (application.running);		
 }

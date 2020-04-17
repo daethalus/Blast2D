@@ -21,7 +21,7 @@ namespace Blast2D {
 
 		template<typename Type>
 		Storage<Type>& assure() const {
-			return static_cast<Storage<Type>&>(*pools[TypeInfo<Type>::index(0)].pool);
+			return static_cast<Storage<Type>&>(*pools[TypeInfo<Type>::index(-1)].pool);
 		}
 
 		template<typename Type>
@@ -49,8 +49,11 @@ namespace Blast2D {
 			pools.push_back({ std::unique_ptr<SparseSet>{new Storage<Type>()} });
 		}
 
-		Entity create() {
-			return entityIdPool.generateId();
+		template<typename ...Types>
+		Entity create(Types&...args) {
+			const auto entity = entityIdPool.generateId();
+			((void)set(entity, std::forward<Types>(args)), ...);
+			return entity;
 		}
 
 		template<typename Func>
@@ -81,6 +84,10 @@ namespace Blast2D {
 		Type& get(const Entity entity) {
 			return this->assure<Type>().get(entity);
 		}
+		template<typename Type>
+		Type& last() {
+			return this->assure<Type>().back();
+		}
 
 		template<typename Type>
 		Type& get(const Index index, const Entity entity) {
@@ -99,13 +106,31 @@ namespace Blast2D {
 
 		template<typename ...Types, typename Func>
 		void forEach(Func func) {
-			auto viewPools = std::make_tuple(&assure<Types>()...);
-			auto firstPool = std::get<0>(viewPools);
-			for (const auto entity: firstPool->data()) {
-				if ((std::get<Storage<Types>*>(viewPools)->has(entity) && ...)) {
-					//auto tuple = std::make_tuple(std::get<Storage<Types>*>(viewPools)->get(entity)...);
-					//std::apply(func, tuple);
-					func(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+			if constexpr (sizeof...(Types) == 1) {
+				auto viewPools = std::make_tuple(&assure<Types>()...);
+				for (const auto entity : std::get<0>(viewPools)->data()) {
+					auto tuple = std::make_tuple(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+					if constexpr (std::is_invocable_v<Func, decltype(tuple)>) {
+						std::apply(func, tuple);
+					} else {
+						auto entityTuple = std::tuple_cat(std::make_tuple(entity), tuple);
+						std::apply(func, entityTuple);
+					}
+				}
+			} else {
+				auto viewPools = std::make_tuple(&assure<Types>()...);
+				auto firstPool = std::get<0>(viewPools);
+				for (const auto entity : firstPool->data()) {
+					if ((std::get<Storage<Types>*>(viewPools)->has(entity) && ...)) {
+
+						auto tuple = std::make_tuple(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+						if constexpr (std::is_invocable_v<Func, decltype(tuple)>) {
+							std::apply(func, tuple);
+						} else {
+							auto entityTuple = std::tuple_cat(std::make_tuple(entity), tuple);
+							std::apply(func, entityTuple);
+						}
+					}
 				}
 			}
 		}

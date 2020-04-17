@@ -66,6 +66,9 @@ namespace Blast2D {
 			return direct;
 		}
 
+		Entity back() {
+			return this->index(direct.back());
+		}
 
 	private:
 		std::vector<std::unique_ptr<Entity[]>> reverse;

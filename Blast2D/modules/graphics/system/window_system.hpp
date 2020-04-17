@@ -5,7 +5,9 @@
 
 namespace Blast2D {
 	class WindowSystem : public System {
-		// Inherited via System
+
+		virtual void onCreate(EntityManager& entityManager) override;
+		
 		virtual void onUpdate(EntityManager& entityManager) override;
 	};
 }
