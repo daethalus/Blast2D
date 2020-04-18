@@ -17,6 +17,8 @@ target_compile_features(module-graphics-lib PRIVATE cxx_std_17)
 find_package(glfw3 3.3 REQUIRED)
 target_link_libraries(module-graphics-lib glfw)
 
+set(OpenGL_GL_PREFERENCE "GLVND")
+
 find_package(OpenGL REQUIRED)
 target_include_directories(module-graphics-lib PUBLIC ${OPENGL_INCLUDE_DIR})
 target_link_libraries(module-graphics-lib ${OPENGL_gl_LIBRARY})

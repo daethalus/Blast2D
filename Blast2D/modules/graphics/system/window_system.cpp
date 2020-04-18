@@ -1,5 +1,7 @@
 #include "window_system.hpp"
 
+#include <exception>
+
 #include "glad/glad.h"
 #include <GLFW/glfw3.h>
 
@@ -16,7 +18,9 @@ void Blast2D::WindowSystem::onCreate() {
 		});
 
 		if (!glfwInit()) {
-			throw new std::exception("Error on start glfwInit");
+            LOG(ERROR) << "Error on start glfwInit";
+            return;
+			//throw new std::exception("Error on start glfwInit");
 		}
 
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -28,12 +32,15 @@ void Blast2D::WindowSystem::onCreate() {
 			glfwTerminate();
 			return;
 		}
-		entityManager.set<WindowHandler>(entity, { window });
-		glfwMakeContextCurrent(window);
 
-		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-			throw new std::exception("Error on load gladLoadGLLoader");
-		}
+        glfwMakeContextCurrent(window);
+
+        if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
+            LOG(ERROR) << "Error on load gladLoadGLLoader";
+            return;
+        }
+
+        entityManager.set<WindowHandler>(entity, { window });
 
 		glViewport(0, 0, 800, 600);
 		glEnable(GL_CULL_FACE);
