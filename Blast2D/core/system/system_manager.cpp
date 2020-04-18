@@ -2,15 +2,15 @@
 #include "system_manager.hpp"
 
 
-void Blast2D::SystemManager::create(EntityManager& entityManager) {
+void Blast2D::SystemManager::create() {
 	for (auto& systemInfo : systems) {
-		systemInfo.second.system->onCreate(entityManager);
+		systemInfo.second.system->onCreate();
 	}
 }
 
-void Blast2D::SystemManager::update(EntityManager& entityManager) {
+void Blast2D::SystemManager::update() {
 	for (auto& systemInfo : systems) {
-		systemInfo.second.system->onUpdate(entityManager);
+		systemInfo.second.system->onUpdate();
 	}
 }
 

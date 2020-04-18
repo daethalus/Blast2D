@@ -8,8 +8,8 @@
 
 #include <modules/graphics/components/window.hpp>
 
-void Blast2D::WindowSystem::onCreate(EntityManager& entityManager) {
-	entityManager.forEach<WindowProperties>([&entityManager](auto entity, WindowProperties&properties) {
+void Blast2D::WindowSystem::onCreate() {	
+	entityManager.forEach<WindowProperties>([this](auto entity, WindowProperties&properties) {
 
 		glfwSetErrorCallback([](int id, const char* description) {
 			LOG(ERROR) << "GLFW ID: (" << id << ") description " << description;
@@ -28,6 +28,7 @@ void Blast2D::WindowSystem::onCreate(EntityManager& entityManager) {
 			glfwTerminate();
 			return;
 		}
+		entityManager.set<WindowHandler>(entity, { window });
 		glfwMakeContextCurrent(window);
 
 		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
@@ -39,25 +40,34 @@ void Blast2D::WindowSystem::onCreate(EntityManager& entityManager) {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		glfwSwapInterval(1);
 
 		glfwSetFramebufferSizeCallback(window,[] (GLFWwindow* window, int width, int height) {
-			glViewport(0, 0, width, height);			
+			glViewport(0, 0, width, height);
+			auto& em = EntityManager::getInstance();
+			auto & wp = em.last<WindowProperties>();
+			wp.size = { (float) width , (float)height };
 		});
-
-		entityManager.set<WindowHandler>(entity, { window });
 	});
 }
 
-void Blast2D::WindowSystem::onUpdate(EntityManager& entityManager) {
-	entityManager.forEach<WindowProperties, WindowHandler>([&entityManager](auto entity, WindowProperties& properties, WindowHandler& handler) {
+void Blast2D::WindowSystem::onUpdate() {
+	entityManager.forEach<WindowProperties, WindowHandler>([this](auto entity, WindowProperties& properties, WindowHandler& handler) {
 		GLFWwindow* window = (GLFWwindow*) handler.handler;		
+
+		if (properties.maximize && !handler.maximized) {
+			glfwMaximizeWindow(window);
+		}
+
+		if (properties.vsync && !handler.vsyncOn) {
+			glfwSwapInterval(1);
+		}
+		
 		if (!glfwWindowShouldClose(window)) {
-			glfwPollEvents();
-			glClearColor(0, 0, 0, 0);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			glfwSwapBuffers(window);
+
+			glfwPollEvents();			
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);			
 		} else {
 			auto& application = entityManager.last<Application>();
 			application.running = false;

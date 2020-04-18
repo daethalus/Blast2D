@@ -15,6 +15,8 @@ namespace Blast2D {
 	class EntityManager {
 	private:
 
+		EntityManager(){}
+
 		EntityIdPool entityIdPool;
 
 		mutable std::vector<PoolData> pools{};
@@ -30,6 +32,14 @@ namespace Blast2D {
 		}
 
 	public:
+		EntityManager(EntityManager const&) = delete;
+		void operator=(EntityManager const&) = delete;
+
+		static EntityManager& getInstance() {
+			static EntityManager instance;
+			return instance;
+		}
+
 		template<typename Type>
 		void createComponent() {
 			TypeInfo<Type>::index(pools.size());

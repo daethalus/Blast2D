@@ -42,10 +42,10 @@ int main() {
 	
 
 	LOG(INFO) << "Starting engine";
-	Blast2D::EntityManager entityManager;
+	Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
 
 	entityManager.createComponent<Position>();
-	entityManager.createComponent<Velocity>();	
+	entityManager.createComponent<Velocity>();
 	entityManager.createComponent<Blast2D::WindowProperties>();
 	entityManager.createComponent<Blast2D::WindowHandler>();
 	entityManager.createComponent<Blast2D::Application>();
@@ -54,7 +54,7 @@ int main() {
 	auto containerIndex2 = entityManager.runtimeComponent<Container>();
 
 	entityManager.create(
-		Blast2D::WindowProperties{}
+		Blast2D::WindowProperties{true}
 	);
 
 	entityManager.create(
@@ -96,9 +96,9 @@ int main() {
 
 	chrono.end();
 
-	sm.create(entityManager);
+	sm.create();
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		
-		sm.update(entityManager);		
+		sm.update();		
 	} while (application.running);		
 }

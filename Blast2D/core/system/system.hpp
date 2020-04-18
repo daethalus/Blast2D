@@ -6,8 +6,9 @@
 namespace Blast2D {
 	class System {
 	public:		
-		virtual void onCreate(EntityManager& entityManager) {};
-		virtual void onUpdate(EntityManager& entityManager) = 0;
+		EntityManager& entityManager = EntityManager::getInstance();
+		virtual void onCreate() {};
+		virtual void onUpdate() = 0;
 	};
 }
 

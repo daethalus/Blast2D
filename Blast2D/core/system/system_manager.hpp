@@ -26,8 +26,8 @@ namespace Blast2D {
 	public:
 		template<typename Sys>
 		void add(std::string name);
-		void update(EntityManager& entityManager);
-		void create(EntityManager& entityManager);
+		void update();
+		void create();
 	};
 
 	template<typename Sys>
