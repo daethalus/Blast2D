@@ -4,6 +4,8 @@
 #include <unordered_map>
 #include <memory>
 #include <functional>
+#include <assert.h>
+
 #include <core/ecs/component_register.hpp>
 #include <core/ecs/sparse_set.hpp>
 #include <core/ecs/storage.hpp>
@@ -23,7 +25,9 @@ namespace Blast2D {
 
 		template<typename Type>
 		Storage<Type>& assure() const {
-			return static_cast<Storage<Type>&>(*pools[TypeInfo<Type>::index(-1)].pool);
+		    const auto index = TypeInfo<Type>::index(-1);
+            assert(pools.size() > index);
+			return static_cast<Storage<Type>&>(*pools[index].pool);
 		}
 
 		template<typename Type>
@@ -60,7 +64,7 @@ namespace Blast2D {
 		}
 
 		template<typename ...Types>
-		Entity create(Types&...args) {
+		Entity create(Types&&...args) {
 			const auto entity = entityIdPool.generateId();
 			((void)set(entity, std::forward<Types>(args)), ...);
 			return entity;

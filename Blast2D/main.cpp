@@ -16,8 +16,8 @@
 #include <core/system/system.hpp>
 #include <core/system/system_manager.hpp>
 
-#include <modules/graphics/system/window_system.hpp>
-#include <modules/graphics/components/window.hpp>
+//#include <modules/graphics/system/window_system.hpp>
+//#include <modules/graphics/components/window.hpp>
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -38,7 +38,7 @@ int main() {
 
 	Blast2D::SystemManager sm;
 
-	sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
+	//sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
 	
 
 	LOG(INFO) << "Starting engine";
@@ -46,16 +46,16 @@ int main() {
 
 	entityManager.createComponent<Position>();
 	entityManager.createComponent<Velocity>();
-	entityManager.createComponent<Blast2D::WindowProperties>();
-	entityManager.createComponent<Blast2D::WindowHandler>();
-	entityManager.createComponent<Blast2D::Application>();
+//	entityManager.createComponent<Blast2D::WindowProperties>();
+//	entityManager.createComponent<Blast2D::WindowHandler>();
+    entityManager.createComponent<Blast2D::Application>();
 	
 	auto containerIndex1 = entityManager.runtimeComponent<Container>();
 	auto containerIndex2 = entityManager.runtimeComponent<Container>();
 
-	entityManager.create(
-		Blast2D::WindowProperties{true}
-	);
+//	entityManager.create(
+//		Blast2D::WindowProperties{true}
+//	);
 
 	entityManager.create(
 		Blast2D::Application{ true }
@@ -71,7 +71,8 @@ int main() {
 	long long value = 0;
 
 
-	entityManager.forEach<Position>([&value](auto& position) {
+	entityManager.forEach<Position>([&value](auto& entity, auto& position) {
+	    LOG(INFO) << position.x;
 	});
 	
 	LOG(INFO) << value;
