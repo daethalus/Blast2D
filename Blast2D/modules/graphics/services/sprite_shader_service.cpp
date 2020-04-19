@@ -21,7 +21,7 @@ void Blast2D::SpriteShaderService::setTransform(const Shader& shader, const Matr
 	setMatrix4(shader, "matrix", matrix4);
 }
 
-Blast2D::Shader& Blast2D::SpriteShaderService::compile() {
+Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 
 	const char* vertex =
 		"#version 330 core \n "
@@ -55,5 +55,5 @@ Blast2D::Shader& Blast2D::SpriteShaderService::compile() {
 		"	color = ourColor * customColor * texture(text, TexCoords); \n "
 		"} ";
 
-	return ShaderService::compile(vertex, fragment);	
+	return {ShaderService::compile(vertex, fragment)};
 }

@@ -40,7 +40,7 @@ void Blast2D::WindowSystem::onCreate() {
             return;
         }
 
-        entityManager.set<WindowHandler>(entity, { window });
+        entityManager.set<WindowHandler>(entity, WindowHandler{ window });
 
 		glViewport(0, 0, 800, 600);
 		glEnable(GL_CULL_FACE);

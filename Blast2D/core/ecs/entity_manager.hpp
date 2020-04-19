@@ -85,8 +85,8 @@ namespace Blast2D {
 		}
 
 		template<typename Type>
-		void set(const Entity entity, Type type) {
-			this->assure<Type>().set(entity, type);
+		void set(const Entity entity, Type& type) {
+			this->assure<Type>().set(entity, std::move(type));
 		}
 
 		template<typename Type>
