@@ -5,7 +5,7 @@ void Blast2D::SpriteShaderService::setTexture(const Shader& shader, const int te
 }
 
 void Blast2D::SpriteShaderService::setColor(const Shader& shader, const Color& color) {
-	setVector4(shader, "color", 
+	setVector4(shader, "customColor", 
 			   {	(float) color.red / 255,
 					(float) color.green / 255, 
 					(float) color.blue / 255,
@@ -39,7 +39,8 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"\n "
 		"	TexCoords = texCoords; \n "
 		"	ourColor = aColor; \n "
-		"	gl_Position = projection * matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
+		//"	gl_Position = projection * matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
+		"	gl_Position = vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
 		"}";
 
 	const char* fragment =
@@ -52,7 +53,8 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"in vec4 ourColor; \n "
 		"\n "
 		"void main() { \n"
-		"	color = ourColor * customColor * texture(text, TexCoords); \n "
+		//"	color = ourColor * customColor * texture(text, TexCoords); \n "
+		"	color = vec4(1,1,1,1); \n "
 		"} ";
 
 	return {ShaderService::compile(vertex, fragment)};

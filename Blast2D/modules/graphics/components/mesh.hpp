@@ -2,16 +2,12 @@
 #define MESH_HPP
 
 #include <vector>
-#include <core/math/vector2.hpp>
-#include <core/math/vector3.hpp>
-#include <core/math/vector4.hpp>
+#include "vertex_position_color_texture.hpp";
 
 namespace Blast2D {
 
 	struct Mesh {
-		std::vector<Vector3> vertices;
-		std::vector<Vector2> uvs;
-		std::vector<Vector4> colors;
+		std::vector<VertexPositionColorTexture> vertices;
 		std::vector<std::uint32_t> indices;
 	};
 }

@@ -45,9 +45,10 @@ int main() {
 	Blast2D::Matrix4::ortho(0.0f, (float)1920, (float)1017, 0.0f, -1.0f, 1.0f);
 
 	Blast2D::SystemManager sm;
-
+	
 	sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
 	sm.add<Blast2D::RenderSystem>("Blast2D_RenderSystem");
+	
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
@@ -71,8 +72,10 @@ int main() {
 
 	Blast2D::SpriteShaderService sp;
 	auto& shader = sp.compile();
-	sp.setTransform(shader, {});
-	sp.setViewport(shader, { 1920, 1080});
+
+	sp.apply(shader);
+	sp.setTransform(shader, Blast2D::Matrix4(1));
+	sp.setViewport(shader, { 1920, 1017});
 	sp.setTexture(shader, 0);
 	sp.setColor(shader, { 255,255,255,255 });
 

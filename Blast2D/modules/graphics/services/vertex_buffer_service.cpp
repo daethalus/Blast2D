@@ -38,7 +38,7 @@ void Blast2D::VertexBufferService::draw(const VertexBuffer& vextexBuffer) {
 void Blast2D::VertexBufferService::updateData(const VertexBuffer& vextexBuffer, const Mesh& mesh) {	
 	glBindVertexArray(vextexBuffer.VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, vextexBuffer.VBO);
-	glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(Vector3), mesh.vertices.data(), GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, mesh.vertices.size() * sizeof(VertexPositionColorTexture), mesh.vertices.data(), GL_STATIC_DRAW);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vextexBuffer.EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh.indices.size() * sizeof(unsigned int), mesh.indices.data(), GL_STATIC_DRAW);

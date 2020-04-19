@@ -4,7 +4,7 @@
 namespace Blast2D {
 
 	struct Matrix4 {
-		float m[16];
+		float m[16] = { 0 };
 
 		float operator[](int index) const {
 			return m[index];
@@ -14,9 +14,10 @@ namespace Blast2D {
 			return m[index];
 		}
 
-		Matrix4() {
-			m[0] = m[3] = 1.0f;
-			m[1] = m[2] = 0.0f;			
+		Matrix4() { }
+
+		Matrix4(float value) {
+			m[0] = m[5] = m[10] = m[15] = value;
 		}
 
 		
