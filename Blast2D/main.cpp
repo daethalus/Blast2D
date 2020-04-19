@@ -18,6 +18,9 @@
 
 #include <modules/graphics/system/window_system.hpp>
 #include <modules/graphics/components/window.hpp>
+#include <modules/graphics/services/sprite_shader_service.hpp>
+
+#include <core/math/matrix4.hpp>
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -36,10 +39,11 @@ struct Container {
 
 int main() {
 
+	Blast2D::Matrix4::ortho(0.0f, (float)1920, (float)1017, 0.0f, -1.0f, 1.0f);
+
 	Blast2D::SystemManager sm;
 
 	sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
-	
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
@@ -56,6 +60,11 @@ int main() {
 	);
 
 	sm.create();
+
+	Blast2D::SpriteShaderService sp;
+	auto& shader = sp.compile();
+	sp.setTransform(shader, {});
+
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		
 		sm.update();		

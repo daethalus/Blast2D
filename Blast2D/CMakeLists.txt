@@ -3,7 +3,7 @@
 
 add_subdirectory(core/logging)
 add_subdirectory(core/system)
-add_subdirectory(modules/graphics/system)
+add_subdirectory(modules/graphics)
 
 add_executable (Blast2D "main.cpp" project.rc)
 

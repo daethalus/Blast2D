@@ -3,7 +3,7 @@
 
 project(module-graphics-lib)
 
-file(GLOB module-graphics-src
+file(GLOB_RECURSE module-graphics-src
     "*.hpp"
     "*.cpp"
 )
