@@ -68,7 +68,7 @@ int main() {
 	sm.create();
 
 	Blast2D::SpriteShaderService sp;
-	auto& shader = sp.compile();
+	auto shader = sp.compile();
 
 	sp.apply(shader);
 	sp.setTransform(shader, Blast2D::Matrix4(1));
@@ -77,12 +77,12 @@ int main() {
 	sp.setColor(shader, { 255,255,255,255 });
 
 	Blast2D::SpriteBatchService sbp;
-	auto& mesh = Blast2D::Mesh();
+	auto mesh = Blast2D::Mesh();
 	sbp.draw(mesh);
 
 	auto entity = entityManager.create();
-	entityManager.set<Blast2D::Shader>(entity, Blast2D::Shader(shader));
-	entityManager.set<Blast2D::Mesh>(entity, Blast2D::Mesh(mesh));
+	entityManager.set<Blast2D::Shader>(entity, shader);
+	entityManager.set<Blast2D::Mesh>(entity, mesh);
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		

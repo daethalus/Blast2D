@@ -64,9 +64,9 @@ namespace Blast2D {
 		}
 
 		template<typename ...Types>
-		Entity create(Types&&...args) {
+		Entity create(Types...args) {
 			const auto entity = entityIdPool.generateId();
-			((void)set(entity, std::forward<Types>(args)), ...);
+			((void)set(entity, args), ...);
 			return entity;
 		}
 
@@ -85,8 +85,8 @@ namespace Blast2D {
 		}
 
 		template<typename Type>
-		void set(const Entity entity, Type& type) {
-			this->assure<Type>().set(entity, std::move(type));
+		void set(const Entity entity, Type type) {
+			this->assure<Type>().set(entity, type);
 		}
 
 		template<typename Type>

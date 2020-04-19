@@ -57,5 +57,5 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"	color = ourColor * customColor; \n "
 		"} ";
 
-	return {ShaderService::compile(vertex, fragment)};
+	return ShaderService::compile(vertex, fragment);
 }

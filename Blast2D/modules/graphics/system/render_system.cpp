@@ -10,6 +10,6 @@ void Blast2D::RenderSystem::onUpdate() {
 		vertexBuffer.size = mesh.indices.size();
 		vertexBufferService.updateData(vertexBuffer, mesh);		
 		entityManager.remove<Mesh>(entity);
-		entityManager.set<VertexBuffer>(entity, VertexBuffer(vertexBuffer));
+		entityManager.set<VertexBuffer>(entity, vertexBuffer);
 	});
 }

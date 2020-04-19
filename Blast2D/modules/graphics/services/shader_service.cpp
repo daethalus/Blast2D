@@ -9,7 +9,7 @@ void Blast2D::ShaderService::apply(const Shader& shader) {
 	glUseProgram(shader.ID);
 }
 
-Blast2D::Shader& Blast2D::ShaderService::compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource) {
+Blast2D::Shader Blast2D::ShaderService::compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource) {
 	GLuint sVertex, sFragment, gShader;
 
 	sVertex = glCreateShader(GL_VERTEX_SHADER);
@@ -29,7 +29,7 @@ Blast2D::Shader& Blast2D::ShaderService::compile(const GLchar* vertexSource, con
 		checkCompileErrors(gShader, "GEOMETRY");
 	}
 
-	auto&shader = Shader();
+    Shader shader;
 	
 	shader.ID = glCreateProgram();
 

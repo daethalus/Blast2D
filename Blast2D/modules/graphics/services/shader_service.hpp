@@ -19,7 +19,7 @@ namespace Blast2D {
 		//static Shader activeShader;
 
 		void apply(const Shader& shader);
-		Shader& compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource = nullptr);
+		Shader compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource = nullptr);
 
 		void setInteger(const Shader& shader, const GLchar* name, const int value);
 		void setVector2(const Shader& shader, const GLchar* name, const Vector2& value);

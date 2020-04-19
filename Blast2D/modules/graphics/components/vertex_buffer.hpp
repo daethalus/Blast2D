@@ -1,13 +1,15 @@
 #ifndef VERTEX_BUFFER
 #define VERTEX_BUFFER
 
+#include <vector>
+#include <cstdint>
 
 namespace Blast2D {
 	struct VertexBuffer {
 		unsigned int VAO;
 		unsigned int VBO;
 		unsigned int EBO;
-		size_t size;
+		std::size_t size;
 	};
 }
 
