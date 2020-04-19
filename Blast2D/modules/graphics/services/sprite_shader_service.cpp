@@ -39,8 +39,8 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"\n "
 		"	TexCoords = texCoords; \n "
 		"	ourColor = aColor; \n "
-		//"	gl_Position = projection * matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
-		"	gl_Position = vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
+		"	gl_Position = projection * matrix * vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
+		//"	gl_Position = vec4(vertex.x, vertex.y, vertex.z, 1.0); \n "
 		"}";
 
 	const char* fragment =
@@ -54,7 +54,7 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"\n "
 		"void main() { \n"
 		//"	color = ourColor * customColor * texture(text, TexCoords); \n "
-		"	color = vec4(1,1,1,1); \n "
+		"	color = ourColor * customColor; \n "
 		"} ";
 
 	return {ShaderService::compile(vertex, fragment)};

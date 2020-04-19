@@ -12,9 +12,4 @@ void Blast2D::RenderSystem::onUpdate() {
 		entityManager.remove<Mesh>(entity);
 		entityManager.set<VertexBuffer>(entity, VertexBuffer(vertexBuffer));
 	});
-
-	//entityManager.forEach<VertexBuffer, Shader>([this](auto entity, VertexBuffer& vertexBuffer, Shader& shader) {
-	//	shaderService.apply(shader);
-	//	vertexBufferService.draw(vertexBuffer);
-	//});
 }

@@ -22,7 +22,7 @@ namespace Blast2D {
 
 		
 		static Matrix4 ortho(float left, float right, float bottom, float top, float zNear, float zFar) {
-			Matrix4 mat;
+			Matrix4 mat(1);
 			mat[0] = 2 / (right - left);
 			mat[5] = 2 / (top - bottom);
 			mat[10] = -2 / (zFar - zNear);

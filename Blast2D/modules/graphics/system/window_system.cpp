@@ -46,16 +46,12 @@ void Blast2D::WindowSystem::onCreate() {
         entityManager.set<WindowHandler>(entity, WindowHandler{ window });
 
 		glViewport(0, 0, 800, 600);
-		//glEnable(GL_CULL_FACE);
+		glEnable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		//glfwMaximizeWindow(window);
-		glfwSwapInterval(1);
-		
-
 		glfwSetFramebufferSizeCallback(window,[] (GLFWwindow* window, int width, int height) {
-		//	glViewport(0, 0, width, height);
+			glViewport(0, 0, width, height);
 			auto& em = EntityManager::getInstance();
 			auto & wp = em.last<WindowProperties>();
 			wp.size = { (float) width , (float)height };
@@ -65,10 +61,9 @@ void Blast2D::WindowSystem::onCreate() {
 
 void Blast2D::WindowSystem::onUpdate() {
 	entityManager.forEach<WindowProperties, WindowHandler>([this](auto entity, WindowProperties& properties, WindowHandler& handler) {
-		GLFWwindow* window = (GLFWwindow*) handler.handler;		
-		glfwMakeContextCurrent(window);
+		GLFWwindow* window = (GLFWwindow*) handler.handler;
 
-		/*if (properties.maximize && !handler.maximized) {
+		if (properties.maximize && !handler.maximized) {
 			glfwMaximizeWindow(window);
 			handler.maximized = true;
 		}
@@ -76,8 +71,7 @@ void Blast2D::WindowSystem::onUpdate() {
 		if (properties.vsync && !handler.vsyncOn) {
 			glfwSwapInterval(1);
 			handler.vsyncOn = true;
-		}
-		*/
+		}	
 
 		if (!glfwWindowShouldClose(window)) {
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -90,7 +84,6 @@ void Blast2D::WindowSystem::onUpdate() {
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();
-
 		} else {
 			auto& application = entityManager.last<Application>();
 			application.running = false;
