@@ -123,7 +123,7 @@ namespace Blast2D {
 			if constexpr (sizeof...(Types) == 1) {
 				auto viewPools = std::make_tuple(&assure<Types>()...);
 				for (const auto entity : std::get<0>(viewPools)->data()) {
-					auto tuple = std::make_tuple(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+					auto tuple = std::tie(std::get<Storage<Types>*>(viewPools)->get(entity)...);
 					if constexpr (std::is_invocable_v<Func, decltype(tuple)>) {
 						std::apply(func, tuple);
 					} else {
@@ -137,7 +137,7 @@ namespace Blast2D {
 				for (const auto entity : firstPool->data()) {
 					if ((std::get<Storage<Types>*>(viewPools)->has(entity) && ...)) {
 
-						auto tuple = std::make_tuple(std::get<Storage<Types>*>(viewPools)->get(entity)...);
+						auto tuple = std::tie(std::get<Storage<Types>*>(viewPools)->get(entity)...);
 						if constexpr (std::is_invocable_v<Func, decltype(tuple)>) {
 							std::apply(func, tuple);
 						} else {

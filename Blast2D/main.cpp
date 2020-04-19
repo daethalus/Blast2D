@@ -41,9 +41,6 @@ struct Container {
 
 
 int main() {
-
-	Blast2D::Matrix4::ortho(0.0f, (float)1920, (float)1017, 0.0f, -1.0f, 1.0f);
-
 	Blast2D::SystemManager sm;
 	
 	sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
@@ -89,6 +86,6 @@ int main() {
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		
-		sm.update();		
-	} while (application.running);		
+		sm.update();
+	} while (application.running);
 }
