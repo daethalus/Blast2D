@@ -16,8 +16,8 @@
 #include <core/system/system.hpp>
 #include <core/system/system_manager.hpp>
 
-#include <modules/graphics/system/window_system.hpp>
-#include <modules/graphics/system/render_system.hpp>
+//#include <modules/graphics/system/window_system.hpp>
+//#include <modules/graphics/system/render_system.hpp>
 #include <modules/graphics/components/window.hpp>
 #include <modules/graphics/components/vertex_buffer.hpp>
 #include <modules/graphics/services/sprite_shader_service.hpp>
@@ -27,7 +27,8 @@
 
 INITIALIZE_EASYLOGGINGPP
 
-struct Position {
+
+struct Position  {	
 	int x;
 };
 
@@ -40,11 +41,12 @@ struct Container {
 };
 
 
-int main() {
-	Blast2D::SystemManager sm;
+int main() {	
 	
-	sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
-	sm.add<Blast2D::RenderSystem>("Blast2D_RenderSystem");
+	Blast2D::SystemManager&sm = Blast2D::SystemManager::getInstance();
+	
+	//sm.add<Blast2D::WindowSystem>("Blast2D_WindowSystem");
+	//sm.add<Blast2D::RenderSystem>("Blast2D_RenderSystem");
 	
 
 	LOG(INFO) << "Starting engine";

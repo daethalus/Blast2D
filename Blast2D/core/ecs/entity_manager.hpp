@@ -12,6 +12,15 @@
 #include <core/ecs/view.hpp>
 
 
+//#define BLAST_COMPONENT(Name, Base) \
+//	inline static Name *_new() { 
+//			godot::NativeScript *script = godot::NativeScript::_new(); 
+//			script->set_library(godot::get_wrapper<godot::GDNativeLibrary>((godot_object *) godot::gdnlib)); 
+//			script->set_class_name(#Name);
+//			Name *instance = godot::as<Name>(script->new_()); 
+//			return instance; 
+//	} \
+
 namespace Blast2D {
 
 	class EntityManager {

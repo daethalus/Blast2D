@@ -5,6 +5,8 @@
 #include <modules/graphics/services/vertex_buffer_service.hpp>
 #include <modules/graphics/services/shader_service.hpp>
 
+#include <core/system/system_manager.hpp>
+
 namespace Blast2D {
 	class WindowSystem : public System {
 	public:
@@ -16,6 +18,8 @@ namespace Blast2D {
 
 		virtual void onUpdate() override;
 	};
+
+	BLAST_SYSTEM(WindowSystem);
 }
 
 #endif
