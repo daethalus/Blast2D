@@ -8,8 +8,13 @@ add_executable (Blast2D "main.cpp" project.rc)
 
 target_link_libraries(Blast2D core-logging-lib)
 target_link_libraries(Blast2D core-system-lib)
-target_link_libraries(Blast2D module-graphics-lib)
+
 
 target_compile_features("Blast2D" PRIVATE cxx_std_17)
 
-set_target_properties(Blast2D PROPERTIES LINK_FLAGS "/WHOLEARCHIVE:module-graphics-lib")
+if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    target_link_libraries(Blast2D module-graphics-lib)
+    set_target_properties(Blast2D PROPERTIES LINK_FLAGS "/WHOLEARCHIVE:module-graphics-lib")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_link_libraries(Blast2D -Wl,--whole-archive module-graphics-lib -Wl,--no-whole-archive)
+endif()
