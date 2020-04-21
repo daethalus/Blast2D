@@ -4,7 +4,6 @@
 #include <core/system/system.hpp>
 #include <modules/graphics/services/vertex_buffer_service.hpp>
 #include <modules/graphics/services/shader_service.hpp>
-#include <core/system/system_manager.hpp>
 
 namespace Blast2D {	
 	class RenderSystem : public System {		

@@ -1,6 +1,4 @@
-#include "system_manager.hpp"
-#include "system_manager.hpp"
-
+#include "system.hpp"
 
 void Blast2D::SystemManager::create() {
 	for (auto& systemInfo : systems) {

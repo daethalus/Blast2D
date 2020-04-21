@@ -2,7 +2,7 @@
 #include <core/logging/easylogging++.h>
 #include <core/ecs/entity_manager.hpp>
 #include <core/components/application.hpp>
-#include <core/system/system_manager.hpp>
+#include <core/system/system.hpp>
 #include <modules/graphics/components/window.hpp>
 #include <modules/graphics/components/vertex_buffer.hpp>
 #include <modules/graphics/services/sprite_shader_service.hpp>
