@@ -2,10 +2,10 @@
 #define APPLICATION_HPP
 
 namespace Blast2D {
-
 	struct Application {
 		bool running;
 	};
+	BLAST_COMPONENT(Application);
 }
 
 #endif

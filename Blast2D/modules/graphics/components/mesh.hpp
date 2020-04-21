@@ -2,8 +2,11 @@
 #define MESH_HPP
 
 #include <vector>
-#include "vertex_position_color_texture.hpp"
 #include <cstdint>
+
+#include "vertex_position_color_texture.hpp"
+
+#include <core/ecs/entity_manager.hpp>
 
 namespace Blast2D {
 
@@ -11,6 +14,8 @@ namespace Blast2D {
 		std::vector<VertexPositionColorTexture> vertices;
 		std::vector<uint32_t> indices;
 	};
+
+	BLAST_COMPONENT(Mesh);
 }
 
 #endif // !MESH_HPP

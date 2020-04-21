@@ -4,6 +4,8 @@
 #include <vector>
 #include <cstdint>
 
+#include <core/ecs/entity_manager.hpp>
+
 namespace Blast2D {
 	struct VertexBuffer {
 		unsigned int VAO;
@@ -11,6 +13,8 @@ namespace Blast2D {
 		unsigned int EBO;
 		std::size_t size;
 	};
+
+	BLAST_COMPONENT(VertexBuffer);
 }
 
 

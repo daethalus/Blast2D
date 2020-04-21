@@ -29,17 +29,9 @@ struct Container {
 int main() {	
 	
 	Blast2D::SystemManager&sm = Blast2D::SystemManager::getInstance();
-	
 
 	LOG(INFO) << "Starting engine";
 	Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
-	entityManager.createComponent<Blast2D::WindowProperties>();
-	entityManager.createComponent<Blast2D::WindowHandler>();
-    entityManager.createComponent<Blast2D::Application>();
-	entityManager.createComponent<Blast2D::Mesh>();
-	entityManager.createComponent<Blast2D::Shader>();
-	entityManager.createComponent<Blast2D::Shader>();
-	entityManager.createComponent<Blast2D::VertexBuffer>();
 
 	entityManager.create(
 		Blast2D::WindowProperties{true}

@@ -11,15 +11,7 @@
 #include <core/ecs/storage.hpp>
 #include <core/ecs/view.hpp>
 
-
-//#define BLAST_COMPONENT(Name, Base) \
-//	inline static Name *_new() { 
-//			godot::NativeScript *script = godot::NativeScript::_new(); 
-//			script->set_library(godot::get_wrapper<godot::GDNativeLibrary>((godot_object *) godot::gdnlib)); 
-//			script->set_class_name(#Name);
-//			Name *instance = godot::as<Name>(script->new_()); 
-//			return instance; 
-//	} \
+#define BLAST_COMPONENT(T) const static bool component_##T = Blast2D::EntityManager::getInstance().createComponent<T>()
 
 namespace Blast2D {
 
@@ -54,9 +46,10 @@ namespace Blast2D {
 		}
 
 		template<typename Type>
-		void createComponent() {
+        bool createComponent() {
 			TypeInfo<Type>::index(pools.size());
 			pools.push_back({std::unique_ptr<SparseSet>{new Storage<Type>()}});
+			return true;
 		}
 
 		template<typename Type>
