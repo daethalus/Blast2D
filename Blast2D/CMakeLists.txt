@@ -1,5 +1,14 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
+function(add_blast_module name)
+    if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+        target_link_libraries(Blast2D ${name})
+        set_target_properties(Blast2D PROPERTIES LINK_FLAGS "/WHOLEARCHIVE:" ${name})
+    elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+        target_link_libraries(Blast2D -Wl,--whole-archive ${name} -Wl,--no-whole-archive)
+    endif()
+endfunction()
+
 add_subdirectory(core/logging)
 add_subdirectory(core/system)
 add_subdirectory(modules/graphics)
@@ -9,12 +18,6 @@ add_executable (Blast2D "main.cpp" project.rc)
 target_link_libraries(Blast2D core-logging-lib)
 target_link_libraries(Blast2D core-system-lib)
 
+add_blast_module(module-graphics-lib)
 
 target_compile_features("Blast2D" PRIVATE cxx_std_17)
-
-if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
-    target_link_libraries(Blast2D module-graphics-lib)
-    set_target_properties(Blast2D PROPERTIES LINK_FLAGS "/WHOLEARCHIVE:module-graphics-lib")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_link_libraries(Blast2D -Wl,--whole-archive module-graphics-lib -Wl,--no-whole-archive)
-endif()
