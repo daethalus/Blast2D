@@ -2,7 +2,7 @@
 #define SPRITE_SHADER_SERVICE_HPP
 
 #include "shader_service.hpp"
-#include <core/color.hpp>
+#include <core/graphics/color.hpp>
 #include <core/math/vector2.hpp>
 
 namespace Blast2D {

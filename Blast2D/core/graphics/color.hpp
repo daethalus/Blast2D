@@ -7,9 +7,9 @@ namespace Blast2D {
 		int red;
 		int green;
 		int blue;
-		int alfa;
+		int alpha;
 	};
 }
 
 
-#endif // !COLOR_HPP
+#endif

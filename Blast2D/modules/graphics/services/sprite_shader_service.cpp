@@ -9,7 +9,7 @@ void Blast2D::SpriteShaderService::setColor(const Shader& shader, const Color& c
 			   {	(float) color.red / 255,
 					(float) color.green / 255, 
 					(float) color.blue / 255,
-					(float) color.alfa / 255 
+					(float) color.alpha / 255
 			   });
 }
 
