@@ -13,7 +13,7 @@
 INITIALIZE_EASYLOGGINGPP
 
 
-struct Position  {	
+struct Position  {
 	int x;
 };
 
@@ -53,12 +53,13 @@ int main() {
 	sp.setColor(shader, { 255,255,255,255 });
 
 	Blast2D::SpriteBatchService sbp;
-	auto mesh = Blast2D::Mesh();
-	sbp.draw(mesh);
+	//auto mesh = Blast2D::Mesh();
+
 
 	auto entity = entityManager.create();
 	entityManager.set<Blast2D::Shader>(entity, shader);
-	entityManager.set<Blast2D::Mesh>(entity, mesh);
+    auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
+    sbp.draw(mesh);
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		

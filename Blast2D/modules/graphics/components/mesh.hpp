@@ -13,6 +13,9 @@ namespace Blast2D {
 	struct Mesh {
 		std::vector<VertexPositionColorTexture> vertices;
 		std::vector<uint32_t> indices;
+        Mesh(){}
+        //Mesh(const Mesh&) = delete;
+        //const Mesh& operator=(Mesh const&) = delete;
 	};
 
 	BLAST_COMPONENT(Mesh);

@@ -15,19 +15,6 @@ void Blast2D::SpriteBatchService::draw(Mesh& mesh) {
 	mesh.indices.emplace_back(1);
 	mesh.indices.emplace_back(2);
 	mesh.indices.emplace_back(3);
-
-
-	//mesh.vertices.emplace_back(0.5f, 0.5f, 0.0f, 0, 0, 1, 0.5, 1, 1);
-	//mesh.vertices.emplace_back(0.5f, -0.5f, 0.0f, 0, 0, 1, 0.5, 1, 1);
-	//mesh.vertices.emplace_back(-0.5f, -0.5f, 0.0f, 0, 0, 1, 0.5, 1, 1);
-	//mesh.vertices.emplace_back(-0.5f, 0.5f, 0.0f, 0, 0, 1, 0.5, 1, 1);
-
-	//mesh.indices.emplace_back(0);
-	//mesh.indices.emplace_back(1);
-	//mesh.indices.emplace_back(3);
-	//mesh.indices.emplace_back(1);
-	//mesh.indices.emplace_back(2);
-	//mesh.indices.emplace_back(3);
 }
 
 

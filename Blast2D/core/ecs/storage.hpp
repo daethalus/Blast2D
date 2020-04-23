@@ -26,9 +26,19 @@ namespace Blast2D {
 			SparseSet::emplace(entity);
 		}
 
+        Type& assign(const Entity entity) {
+            if constexpr (std::is_aggregate_v<Type>) {
+                instances.push_back({});
+            } else {
+                instances.emplace_back(Type());
+            }
+            SparseSet::emplace(entity);
+            return instances.back();
+        }
+
 		void destroy(const Entity entity) {
-			auto other = std::move(instances.back());
-			instances[this->index(entity)] = std::move(other);
+			auto other = instances.back();
+			instances[this->index(entity)] = other;
 			instances.pop_back();
 			SparseSet::destroy(entity);
 		}

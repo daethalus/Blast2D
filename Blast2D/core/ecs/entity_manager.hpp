@@ -91,6 +91,11 @@ namespace Blast2D {
 			this->assure<Type>().set(entity, type);
 		}
 
+        template<typename Type>
+        Type& assign(const Entity entity) {
+            return this->assure<Type>().assign(entity);
+        }
+
 		template<typename Type>
 		void set(const Index index, const Entity entity, Type type) {
 			this->assure<Type>(index).set(entity, type);
