@@ -4,10 +4,10 @@
 namespace Blast2D {
 
     struct Rect {
-        float x,
-        float y,
-        float width;
-        float height;
+        int x;
+        int y;
+        int width;
+        int height;
     };
 }
 

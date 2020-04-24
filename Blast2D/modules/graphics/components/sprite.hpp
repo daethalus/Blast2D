@@ -6,8 +6,9 @@
 
 namespace Blast2D {
     struct Sprite {
-        std::string id;
         Rect offset;
+        Sprite(Rect _offset) : offset(_offset){
+        }
     };
 }
 

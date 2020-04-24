@@ -1,5 +1,5 @@
-#ifndef BLAST2D_TEXTURE2D_HPP
-#define BLAST2D_TEXTURE2D_HPP
+#ifndef BLAST2D_TEXTURE_2D_HPP
+#define BLAST2D_TEXTURE_2D_HPP
 
 #include <glad/glad.h>
 

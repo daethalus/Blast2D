@@ -4,8 +4,8 @@
 #include <memory>
 #include <unordered_map>
 
-#include <core/graphics/image.hpp>
-#include <modules/graphics/resources/Texture2D.hpp>
+#include <modules/graphics/resources/image.hpp>
+#include <modules/graphics/resources/texture_2d.hpp>
 
 
 namespace Blast2D{
@@ -16,7 +16,13 @@ namespace Blast2D{
     public:
         TextureService(TextureService const&) = delete;
         TextureService& operator=(TextureService const&) = delete;
-        Texture2D& loadTexture(Image &image);
+
+        static TextureService& getInstance() {
+            static TextureService textureService;
+            return textureService;
+        }
+
+        Texture2D& loadTexture(std::shared_ptr<Image> image);
         Texture2D& getTexture(unsigned int ID);
         void bind(const Texture2D&);
         void bind(const unsigned int ID);

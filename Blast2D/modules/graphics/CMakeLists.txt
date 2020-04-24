@@ -4,8 +4,9 @@
 project(module-graphics-lib)
 
 file(GLOB_RECURSE module-graphics-src
-    "*.hpp"
-    "*.cpp"
+        "*.hpp"
+        "*.h"
+        "*.cpp"
 )
 
 add_library (module-graphics-lib ${module-graphics-src})

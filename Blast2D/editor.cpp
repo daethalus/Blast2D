@@ -7,6 +7,8 @@
 #include <modules/graphics/components/vertex_buffer.hpp>
 #include <modules/graphics/services/sprite_shader_service.hpp>
 #include <modules/graphics/services/sprite_batch_service.hpp>
+#include <modules/graphics/services/image_service.hpp>
+#include <modules/graphics/services/texture_service.hpp>
 
 #include <core/math/matrix4.hpp>
 
@@ -28,10 +30,11 @@ struct Container {
 
 int main() {	
 	
-	Blast2D::SystemManager&sm = Blast2D::SystemManager::getInstance();
+	Blast2D::SystemManager &systemManager = Blast2D::SystemManager::getInstance();
+    Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
+
 
 	LOG(INFO) << "Starting engine";
-	Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
 
 	entityManager.create(
 		Blast2D::WindowProperties{true}
@@ -41,7 +44,14 @@ int main() {
 		Blast2D::Application{ true }
 	);
 
-	sm.create();
+	systemManager.create();
+
+	auto& imageService = Blast2D::ImageService::getInstance();
+
+    auto img = imageService.loadImage("test-engineer.png");
+    Blast2D::SpriteSheetBuilder spriteSheetBuilder;
+    imageService.pack(spriteSheetBuilder, *img);
+    auto spriteSheet = imageService.buildSpriteSheet(spriteSheetBuilder);
 
 	Blast2D::SpriteShaderService sp;
 	auto shader = sp.compile();
@@ -55,14 +65,14 @@ int main() {
 	Blast2D::SpriteBatchService sbp;
 	//auto mesh = Blast2D::Mesh();
 
-
 	auto entity = entityManager.create();
 	entityManager.set<Blast2D::Shader>(entity, shader);
     auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
+    mesh.spriteSheet = spriteSheet;
     sbp.draw(mesh);
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		
-		sm.update();
+		systemManager.update();
 	} while (application.running);
 }
