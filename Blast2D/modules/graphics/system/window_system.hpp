@@ -9,9 +9,6 @@ namespace Blast2D {
 	class WindowSystem : public System {
 	public:
 
-		VertexBufferService vertexBufferService;
-		ShaderService shaderService;
-
 		virtual void onCreate() override;
 
 		virtual void onUpdate() override;

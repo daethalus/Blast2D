@@ -11,7 +11,11 @@
 #include <modules/graphics/components/window.hpp>
 #include <modules/graphics/components/shader.hpp>
 #include <modules/graphics/components/vertex_buffer.hpp>
-#include <modules/graphics/services/texture_service.hpp>
+
+
+#include <modules/graphics/libs/imgui/imgui.h>
+#include <modules/graphics/libs/imgui/imgui_impl_glfw.h>
+#include <modules/graphics/libs/imgui/imgui_impl_opengl3.h>
 
 void Blast2D::WindowSystem::onCreate() {	
 	entityManager.forEach<WindowProperties>([this](auto entity, WindowProperties&properties) {
@@ -56,6 +60,13 @@ void Blast2D::WindowSystem::onCreate() {
 			auto & wp = em.last<WindowProperties>();
 			wp.size = { (float) width , (float)height };
 		});
+
+		IMGUI_CHECKVERSION();
+		ImGui::CreateContext();
+		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		ImGui::StyleColorsDark();
+		ImGui_ImplGlfw_InitForOpenGL(window, true);
+		ImGui_ImplOpenGL3_Init("#version 130");
 	});
 }
 
@@ -75,13 +86,16 @@ void Blast2D::WindowSystem::onUpdate() {
 
 		if (!glfwWindowShouldClose(window)) {
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		
+			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			entityManager.forEach<VertexBuffer, Shader>([this](auto entity, VertexBuffer& vertexBuffer, Shader& shader) {
-				TextureService::getInstance().bind(vertexBuffer.texture);
-				shaderService.apply(shader);
-				vertexBufferService.draw(vertexBuffer);
-			});
+			ImGui_ImplOpenGL3_NewFrame();
+			ImGui_ImplGlfw_NewFrame();
+			ImGui::NewFrame();
+
+			SystemManager::getInstance().onRenderer();
+
+			ImGui::Render();
+			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 			glfwSwapBuffers(window);
 			glfwPollEvents();

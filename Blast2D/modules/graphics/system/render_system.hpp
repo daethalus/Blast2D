@@ -6,11 +6,12 @@
 #include <modules/graphics/services/shader_service.hpp>
 
 namespace Blast2D {	
-	class RenderSystem : public System {		
-	public:
-		VertexBufferService vertexBufferService;
-		ShaderService shaderService;
+	class RenderSystem : public System, public Renderer {
+	public:		
 		virtual void onUpdate() override;
+
+		// Inherited via Renderer
+		virtual void onRenderer() override;
 	};
 
 	BLAST_SYSTEM(RenderSystem);

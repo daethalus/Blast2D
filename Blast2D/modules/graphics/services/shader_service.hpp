@@ -16,7 +16,13 @@
 namespace Blast2D {
 	class ShaderService {
 	public:
-		//static Shader activeShader;
+		ShaderService(ShaderService const&) = delete;
+		ShaderService& operator=(ShaderService const&) = delete;
+
+		static ShaderService& getInstance() {
+			static ShaderService shaderService;
+			return shaderService;
+		}
 
 		void apply(const Shader& shader);
 		Shader compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource = nullptr);
@@ -26,8 +32,10 @@ namespace Blast2D {
 		void setVector3(const Shader& shader, const GLchar* name, const Vector3& value);
 		void setVector4(const Shader& shader, const GLchar* name, const Vector4& value);
 		void setMatrix4(const Shader& shader, const GLchar* name, const Matrix4& matrix);
-
-	private:
+	protected:
+		ShaderService() {
+		}
+	private:		
 		void checkCompileErrors(GLuint object, std::string type);
 	};
 }

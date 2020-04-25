@@ -14,26 +14,42 @@
 
 namespace Blast2D {
 
-    class System {
+    class BaseSystem {
     public:
         EntityManager& entityManager = EntityManager::getInstance();
-        virtual void onCreate() {};
-        virtual void onUpdate() = 0;
+        virtual void onCreate() {};        
     };
 
+	class Renderer {
+	public:
+		virtual void onRenderer() = 0;
+	};
+
+	class Updater {
+	public:
+		virtual void onUpdate() = 0;
+	};
+
+	class System : public BaseSystem, public Updater { };
+
+	template<typename Type>
 	struct SystemInformation {
 		std::string name;
-		std::unique_ptr<System> system;
+		std::shared_ptr<Type> system;
 		bool active;
 		double mediumExecutionTime;
 	};
 
-	typedef std::unordered_map<std::string, SystemInformation> SystemRegister;
+	typedef std::unordered_map<std::string, SystemInformation<BaseSystem>> SystemRegister;
+	typedef std::unordered_map<std::string, SystemInformation<Updater>> UpdaterRegister;
+	typedef std::unordered_map<std::string, SystemInformation<Renderer>> RendererRegister;
 
 	class SystemManager {
 	private:
 		SystemManager(){}
 		SystemRegister systems;
+		UpdaterRegister updaters;
+		RendererRegister renderers;
 	public:
 		SystemManager(SystemManager const&) = delete;
 		void operator=(SystemManager const&) = delete;
@@ -43,8 +59,9 @@ namespace Blast2D {
 			return instance;
 		}
 
-		void update();
-		void create();
+		void onUpdate();
+		void onCreate();
+		void onRenderer();
 
 		template<typename Sys>
 		static bool registerSystem(std::string name);
@@ -53,8 +70,14 @@ namespace Blast2D {
 	template<typename Sys>
 	inline bool SystemManager::registerSystem(const std::string name) {
 		LOG(INFO) << name << " registered";
-		getInstance().systems[name] = { name, std::make_unique<Sys>(), true, 0 };
-	//	systems[name] = { name, std::make_unique<Sys>(), true, 0 };
+		auto pointer = std::make_shared<Sys>();
+		getInstance().systems[name] = { name, pointer , true, 0 };
+		if constexpr (std::is_base_of<Updater, Sys>::value) {
+			getInstance().updaters[name] = { name, std::static_pointer_cast<Updater>(pointer), true, 0 };
+		}
+		if constexpr (std::is_base_of<Renderer, Sys>::value) {
+			getInstance().renderers[name] = { name, std::static_pointer_cast<Renderer>(pointer), true, 0 };
+		}
 		return true;
 	}	
 }

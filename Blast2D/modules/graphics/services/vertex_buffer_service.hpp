@@ -7,10 +7,22 @@
 namespace Blast2D{
 	class VertexBufferService {
 	public:
-		VertexBuffer generate();
+		VertexBufferService(const VertexBufferService&) = delete;
+		VertexBufferService operator=(const VertexBufferService&) = delete;
+
+		static VertexBufferService& getInstance() {
+			static VertexBufferService vertex;
+			return vertex;
+		}
+
+		VertexBuffer generate();		
+
 		void draw(const VertexBuffer& vextexBuffer);
 		void updateData(const VertexBuffer& vextexBuffer, const Mesh& mesh);
 		void clearData(const VertexBuffer& vextexBuffer);
+
+	private:
+		VertexBufferService() {}
 	};
 }
 

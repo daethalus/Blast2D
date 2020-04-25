@@ -44,9 +44,10 @@ int main() {
 		Blast2D::Application{ true }
 	);
 
-	systemManager.create();
+	systemManager.onCreate();
 
-    Blast2D::SpriteShaderService sp;
+    auto& sp = Blast2D::SpriteShaderService::getInstance();
+
     auto shader = sp.compile();
     sp.apply(shader);
     sp.setTransform(shader, Blast2D::Matrix4(1));
@@ -74,6 +75,6 @@ int main() {
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		
-		systemManager.update();
+		systemManager.onUpdate();
 	} while (application.running);
 }
