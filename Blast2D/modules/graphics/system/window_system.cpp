@@ -34,7 +34,7 @@ void Blast2D::WindowSystem::onCreate() {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-		GLFWwindow* window = glfwCreateWindow(800, 600, "Evolutio", NULL, NULL);
+		GLFWwindow* window = glfwCreateWindow(800, 600, properties.title.c_str(), NULL, NULL);
 		if (!window) {
 			glfwTerminate();
 			return;
@@ -53,6 +53,7 @@ void Blast2D::WindowSystem::onCreate() {
 		glEnable(GL_CULL_FACE);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
 		glfwSetFramebufferSizeCallback(window,[] (GLFWwindow* window, int width, int height) {
 			glViewport(0, 0, width, height);
@@ -63,7 +64,6 @@ void Blast2D::WindowSystem::onCreate() {
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui::StyleColorsDark();
 		ImGui_ImplGlfw_InitForOpenGL(window, true);
 		ImGui_ImplOpenGL3_Init("#version 130");
@@ -85,7 +85,6 @@ void Blast2D::WindowSystem::onUpdate() {
 		}	
 
 		if (!glfwWindowShouldClose(window)) {
-			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			ImGui_ImplOpenGL3_NewFrame();

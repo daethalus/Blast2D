@@ -3,8 +3,9 @@
 #include <modules/graphics/components/mesh.hpp>
 #include <modules/graphics/components/shader.hpp>
 #include <modules/graphics/components/vertex_buffer.hpp>
-
 #include <modules/graphics/services/texture_service.hpp>
+#include <modules/graphics/components/window.hpp>
+#include <modules/graphics/libs/imgui/imgui.h>
 
 void Blast2D::RenderSystem::onUpdate() {
 	entityManager.forEach<Mesh>([this](auto entity, Mesh& mesh) {
@@ -23,4 +24,6 @@ void Blast2D::RenderSystem::onRenderer() {
 		ShaderService::getInstance().apply(shader);
 		VertexBufferService::getInstance().draw(vertexBuffer);
 	});
+	auto &window = entityManager.last<WindowProperties>();
+    ImGui::ShowDemoWindow();
 }

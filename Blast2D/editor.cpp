@@ -46,32 +46,32 @@ int main() {
 
 	systemManager.onCreate();
 
-    auto& sp = Blast2D::SpriteShaderService::getInstance();
-
-    auto shader = sp.compile();
-    sp.apply(shader);
-    sp.setTransform(shader, Blast2D::Matrix4(1));
-    sp.setViewport(shader, { 1920, 1017});
-    sp.setTexture(shader, 0);
-    sp.setColor(shader, { 255,255,255,255 });
-
-	auto& imageService = Blast2D::ImageService::getInstance();
-
-    auto img = imageService.loadImage("test-engineer.png");
-    Blast2D::SpriteSheetBuilder spriteSheetBuilder;
-    imageService.pack(spriteSheetBuilder, *img);
-    auto spriteSheet = imageService.buildSpriteSheet(spriteSheetBuilder);
-
-	Blast2D::SpriteBatchService sbp;
-	//auto mesh = Blast2D::Mesh();
-
-	auto entity = entityManager.create();
-	entityManager.set<Blast2D::Shader>(entity, shader);
-
-    auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
-    mesh.spriteSheet = spriteSheet;
-    Blast2D::Transform transform = {{100,100,1},{500,500},0};
-    sbp.draw(mesh,spriteSheet->sprites.front(),transform);
+//    auto& sp = Blast2D::SpriteShaderService::getInstance();
+//
+//    auto shader = sp.compile();
+//    sp.apply(shader);
+//    sp.setTransform(shader, Blast2D::Matrix4(1));
+//    sp.setViewport(shader, { 1920, 1017});
+//    sp.setTexture(shader, 0);
+//    sp.setColor(shader, { 255,255,255,255 });
+//
+//	auto& imageService = Blast2D::ImageService::getInstance();
+//
+//    auto img = imageService.loadImage("test-engineer.png");
+//    Blast2D::SpriteSheetBuilder spriteSheetBuilder;
+//    imageService.pack(spriteSheetBuilder, *img);
+//    auto spriteSheet = imageService.buildSpriteSheet(spriteSheetBuilder);
+//
+//	Blast2D::SpriteBatchService sbp;
+//	//auto mesh = Blast2D::Mesh();
+//
+//	auto entity = entityManager.create();
+//	entityManager.set<Blast2D::Shader>(entity, shader);
+//
+//    auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
+//    mesh.spriteSheet = spriteSheet;
+//    Blast2D::Transform transform = {{100,100,1},{500,500},0};
+//    sbp.draw(mesh,spriteSheet->sprites.front(),transform);
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		

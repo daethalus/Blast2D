@@ -10,6 +10,7 @@ namespace Blast2D {
 		bool vsync = true;
 		bool running = true;
 		Vector2 size = { 800,600 };
+		std::string title = "Blast2D";
 	};
     BLAST_COMPONENT(WindowProperties);
 
