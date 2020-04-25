@@ -23,7 +23,7 @@ Blast2D::Texture2D &Blast2D::TextureService::loadTexture(std::shared_ptr<Image> 
     texture->ID = id;
     texture->height = image->height;
     texture->width = image->width;
-    glBindTexture(GL_TEXTURE_2D, id);
+	bind(id);    
     glTexImage2D(GL_TEXTURE_2D, 0, texture->internalFormat, texture->width, texture->height, 0, texture->imageFormat, GL_UNSIGNED_BYTE, image->data);
 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texture->wrapS);

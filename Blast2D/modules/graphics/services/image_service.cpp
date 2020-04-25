@@ -3,10 +3,12 @@
 #include <modules/graphics/libs/stb_image.h>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <modules/graphics/libs/stb_image_write.h>
+#include <assert.h>
 
 std::shared_ptr<Blast2D::Image> Blast2D::ImageService::loadImage(std::string path) {
     int width, height, nrChannels;
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
+	assert(data != nullptr);
     return std::make_shared<Image>(width, height, nrChannels, data);
 }
 

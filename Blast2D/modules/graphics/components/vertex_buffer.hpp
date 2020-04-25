@@ -12,6 +12,7 @@ namespace Blast2D {
 		unsigned int VBO;
 		unsigned int EBO;
 		std::size_t size;
+		unsigned int texture;
 	};
 
 	BLAST_COMPONENT(VertexBuffer);

@@ -8,6 +8,7 @@ void Blast2D::RenderSystem::onUpdate() {
 	entityManager.forEach<Mesh>([this](auto entity, Mesh& mesh) {
 		auto vertexBuffer = vertexBufferService.generate();
 		vertexBuffer.size = mesh.indices.size();
+		vertexBuffer.texture = mesh.spriteSheet->textureId;
 		vertexBufferService.updateData(vertexBuffer, mesh);		
 		entityManager.remove<Mesh>(entity);
 		entityManager.set<VertexBuffer>(entity, vertexBuffer);

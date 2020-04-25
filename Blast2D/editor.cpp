@@ -66,9 +66,10 @@ int main() {
 
 	auto entity = entityManager.create();
 	entityManager.set<Blast2D::Shader>(entity, shader);
+
     auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
     mesh.spriteSheet = spriteSheet;
-    Blast2D::Transform transform = {{100,100,1},{300,300},0};
+    Blast2D::Transform transform = {{100,100,1},{500,500},0};
     sbp.draw(mesh,spriteSheet->sprites.front(),transform);
 
 	auto& application = entityManager.last<Blast2D::Application>();

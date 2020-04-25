@@ -9,9 +9,9 @@
 #include <core/components/application.hpp>
 
 #include <modules/graphics/components/window.hpp>
-
 #include <modules/graphics/components/shader.hpp>
 #include <modules/graphics/components/vertex_buffer.hpp>
+#include <modules/graphics/services/texture_service.hpp>
 
 void Blast2D::WindowSystem::onCreate() {	
 	entityManager.forEach<WindowProperties>([this](auto entity, WindowProperties&properties) {
@@ -78,6 +78,7 @@ void Blast2D::WindowSystem::onUpdate() {
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);		
 
 			entityManager.forEach<VertexBuffer, Shader>([this](auto entity, VertexBuffer& vertexBuffer, Shader& shader) {
+				TextureService::getInstance().bind(vertexBuffer.texture);
 				shaderService.apply(shader);
 				vertexBufferService.draw(vertexBuffer);
 			});

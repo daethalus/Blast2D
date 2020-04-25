@@ -247,7 +247,7 @@ public:
                 ref(*pbin);
                 return pbin;
             }
-            maxId_ = std::max(id, maxId_);
+            maxId_ = std::max<int32_t>(id, maxId_);
         } else {
             id = ++maxId_;
         }
@@ -324,10 +324,10 @@ public:
             w1 = w2 = width_;
 
             if (w1 <= h1 || w > w1) {   // grow width..
-                w2 = std::max(w, w1) * 2;
+                w2 = std::max<int32_t>(w, w1) * 2;
             }
             if (h1 < w1 || h > h1) {    // grow height..
-                h2 = std::max(h, h1) * 2;
+                h2 = std::max<int32_t>(h, h1) * 2;
             }
 
             resize(w2, h2);
@@ -352,7 +352,7 @@ public:
 
             for (auto& shelf : shelves_) {
                 h2 += shelf.h();
-                w2 = std::max(shelf.w() - shelf.wfree(), w2);
+                w2 = std::max<int32_t>(shelf.w() - shelf.wfree(), w2);
             }
 
             resize(w2, h2);

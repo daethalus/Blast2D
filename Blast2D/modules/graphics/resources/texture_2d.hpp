@@ -14,6 +14,10 @@ namespace Blast2D{
         unsigned int wrapT;
         unsigned int filterMin;
         unsigned int filterMax;
+		Texture2D():
+			ID(0), width(0), height(0), internalFormat(GL_RGBA), imageFormat(GL_RGBA), wrapS(GL_REPEAT), wrapT(GL_REPEAT), filterMin(GL_NEAREST), filterMax(GL_NEAREST) {
+
+		}
     };
 }
 
