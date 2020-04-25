@@ -25,5 +25,14 @@ void Blast2D::RenderSystem::onRenderer() {
 		VertexBufferService::getInstance().draw(vertexBuffer);
 	});
 	auto &window = entityManager.last<WindowProperties>();
+
+//    ImGuiViewport* viewport = ImGui::GetMainViewport();
+//    ImGui::SetNextWindowPos(viewport->GetWorkPos());
+//    ImGui::SetNextWindowSize(viewport->GetWorkSize());
+//    ImGui::SetNextWindowViewport(viewport->ID);
+//
+//    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+//    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f));
+
     ImGui::ShowDemoWindow();
 }

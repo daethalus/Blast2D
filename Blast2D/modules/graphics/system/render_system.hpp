@@ -9,8 +9,6 @@ namespace Blast2D {
 	class RenderSystem : public System, public Renderer {
 	public:		
 		virtual void onUpdate() override;
-
-		// Inherited via Renderer
 		virtual void onRenderer() override;
 	};
 
