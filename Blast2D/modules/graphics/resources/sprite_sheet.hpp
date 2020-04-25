@@ -5,6 +5,7 @@
 #include <modules/graphics/components/sprite.hpp>
 #include <modules/graphics/libs/shelf-pack.hpp>
 #include <modules/graphics/resources/image.hpp>
+#include <core/math/vector2.hpp>
 
 namespace Blast2D{
     struct BinImg {
@@ -26,6 +27,8 @@ namespace Blast2D{
     struct SpriteSheet {
         unsigned int textureId;
         std::vector<Sprite> sprites;
+        unsigned int width;
+        unsigned int height;
     };
 }
 

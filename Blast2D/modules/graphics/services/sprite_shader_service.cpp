@@ -53,8 +53,8 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"in vec4 ourColor; \n "
 		"\n "
 		"void main() { \n"
-		//"	color = ourColor * customColor * texture(text, TexCoords); \n "
-		"	color = ourColor * customColor; \n "
+		"	color = ourColor * customColor * texture(text, TexCoords); \n "
+		//"	color = ourColor * customColor; \n "
 		"} ";
 
 	return ShaderService::compile(vertex, fragment);

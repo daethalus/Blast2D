@@ -46,21 +46,20 @@ int main() {
 
 	systemManager.create();
 
+    Blast2D::SpriteShaderService sp;
+    auto shader = sp.compile();
+    sp.apply(shader);
+    sp.setTransform(shader, Blast2D::Matrix4(1));
+    sp.setViewport(shader, { 1920, 1017});
+    sp.setTexture(shader, 0);
+    sp.setColor(shader, { 255,255,255,255 });
+
 	auto& imageService = Blast2D::ImageService::getInstance();
 
     auto img = imageService.loadImage("test-engineer.png");
     Blast2D::SpriteSheetBuilder spriteSheetBuilder;
     imageService.pack(spriteSheetBuilder, *img);
     auto spriteSheet = imageService.buildSpriteSheet(spriteSheetBuilder);
-
-	Blast2D::SpriteShaderService sp;
-	auto shader = sp.compile();
-
-	sp.apply(shader);
-	sp.setTransform(shader, Blast2D::Matrix4(1));
-	sp.setViewport(shader, { 1920, 1017});
-	sp.setTexture(shader, 0);
-	sp.setColor(shader, { 255,255,255,255 });
 
 	Blast2D::SpriteBatchService sbp;
 	//auto mesh = Blast2D::Mesh();
@@ -69,7 +68,8 @@ int main() {
 	entityManager.set<Blast2D::Shader>(entity, shader);
     auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
     mesh.spriteSheet = spriteSheet;
-    sbp.draw(mesh);
+    Blast2D::Transform transform = {{100,100,1},{300,300},0};
+    sbp.draw(mesh,spriteSheet->sprites.front(),transform);
 
 	auto& application = entityManager.last<Blast2D::Application>();
 	do {		

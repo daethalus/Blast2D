@@ -15,8 +15,8 @@ namespace Blast2D {
 		std::vector<VertexPositionColorTexture> vertices;
 		std::vector<uint32_t> indices;
 		std::shared_ptr<SpriteSheet> spriteSheet;
-
-        Mesh(){}
+		unsigned int index;
+        Mesh() : index(0){}
         //Mesh(const Mesh&) = delete;
         //const Mesh& operator=(Mesh const&) = delete;
 	};

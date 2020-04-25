@@ -18,6 +18,7 @@ namespace Blast2D{
             static ImageService imageService;
             return imageService;
         }
+        void saveFileFromImage(std::string path, const Image& image);
         std::shared_ptr<Image> loadImage(std::string path);
         void pack(SpriteSheetBuilder &spriteSheetBuilder, const Image& image);
         std::shared_ptr<SpriteSheet> buildSpriteSheet(const SpriteSheetBuilder &spriteSheetBuilder);
