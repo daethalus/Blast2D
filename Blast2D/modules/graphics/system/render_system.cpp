@@ -1,11 +1,6 @@
 #include "render_system.hpp"
 
-#include <modules/graphics/components/mesh.hpp>
-#include <modules/graphics/components/shader.hpp>
-#include <modules/graphics/components/vertex_buffer.hpp>
 #include <modules/graphics/services/texture_service.hpp>
-#include <modules/graphics/components/window.hpp>
-#include <modules/graphics/libs/imgui/imgui.h>
 
 void Blast2D::RenderSystem::onUpdate() {
 	entityManager.forEach<Mesh>([this](auto entity, Mesh& mesh) {
@@ -24,15 +19,5 @@ void Blast2D::RenderSystem::onRenderer() {
 		ShaderService::getInstance().apply(shader);
 		VertexBufferService::getInstance().draw(vertexBuffer);
 	});
-	auto &window = entityManager.last<WindowProperties>();
-
-//    ImGuiViewport* viewport = ImGui::GetMainViewport();
-//    ImGui::SetNextWindowPos(viewport->GetWorkPos());
-//    ImGui::SetNextWindowSize(viewport->GetWorkSize());
-//    ImGui::SetNextWindowViewport(viewport->ID);
-//
-//    ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
-//    ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f));
-
-    ImGui::ShowDemoWindow();
+//	auto &window = entityManager.last<WindowProperties>();
 }
