@@ -1,5 +1,6 @@
 #include <queue>
 #include <core/logging/easylogging++.h>
+#include <core/logging/chronometer.hpp>
 #include <core/ecs/entity_manager.hpp>
 #include <core/components/application.hpp>
 #include <core/system/system.hpp>
@@ -10,39 +11,45 @@
 #include <modules/graphics/services/image_service.hpp>
 #include <modules/graphics/services/texture_service.hpp>
 
+#include <core/math/quad_tree.hpp>
+
 #include <core/math/matrix4.hpp>
+
+#include <modules/game/components/tile_map.hpp>
 
 INITIALIZE_EASYLOGGINGPP
 
 
-struct Position  {
-	int x;
+struct Position {
+    int x;
 };
 
 struct Velocity {
-	int y;
+    int y;
 };
 
 struct Container {
-	int z;
+    int z;
 };
 
-int main() {	
-	Blast2D::SystemManager &systemManager = Blast2D::SystemManager::getInstance();
+int main() {
+    Blast2D::SystemManager &systemManager = Blast2D::SystemManager::getInstance();
     Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
 
 
-	LOG(INFO) << "Starting engine";
+    LOG(INFO) << "Starting engine";
 
-	entityManager.create(
-		Blast2D::WindowProperties{true}
-	);
+    entityManager.create(
+            Blast2D::WindowProperties{true}
+    );
 
-	entityManager.create(
-		Blast2D::Application{ true }
-	);
+    entityManager.create(
+            Blast2D::Application{true}
+    );
 
-	systemManager.onCreate();
+    entityManager.create(Blast2D::World{});
+
+    systemManager.onCreate();
 
 //    auto& sp = Blast2D::SpriteShaderService::getInstance();
 //
@@ -71,8 +78,8 @@ int main() {
 //    Blast2D::Transform transform = {{100,100,1},{500,500},0};
 //    sbp.draw(mesh,spriteSheet->sprites.front(),transform);
 
-	auto& application = entityManager.last<Blast2D::Application>();
-	do {		
-		systemManager.onUpdate();
-	} while (application.running);
+    auto &application = entityManager.last<Blast2D::Application>();
+    do {
+        systemManager.onUpdate();
+    } while (application.running);
 }
