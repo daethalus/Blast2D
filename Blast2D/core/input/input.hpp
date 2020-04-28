@@ -27,6 +27,13 @@ namespace Blast2D{
             static Input input;
             return input;
         }
+        bool isActionPressed(std::string action) {
+
+        }
+
+        bool isActionHolding(std::string action) {
+
+        }
 
         bool isKeyPressed(Keys key) {
             return getKeyState(key) == KeyState::Press;

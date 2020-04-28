@@ -83,6 +83,13 @@ void Blast2D::WindowSystem::onUpdate() {
 	entityManager.forEach<WindowProperties, WindowHandler>([this](auto entity, WindowProperties& properties, WindowHandler& handler) {
 		GLFWwindow* window = (GLFWwindow*) handler.handler;
 
+        if (glfwWindowShouldClose(window)) {
+            auto& application = entityManager.last<Application>();
+            application.running = false;
+            entityManager.destroy(entity);
+            return;
+        }
+
 		if (properties.maximize && !handler.maximized) {
 			glfwMaximizeWindow(window);
 			handler.maximized = true;
@@ -91,27 +98,24 @@ void Blast2D::WindowSystem::onUpdate() {
 		if (properties.vsync && !handler.vsyncOn) {
 			glfwSwapInterval(1);
 			handler.vsyncOn = true;
-		}	
-
-		if (!glfwWindowShouldClose(window)) {
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-			ImGui_ImplOpenGL3_NewFrame();
-			ImGui_ImplGlfw_NewFrame();
-			ImGui::NewFrame();
-
-			SystemManager::getInstance().onRenderer();
-
-			ImGui::Render();
-			ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-			glfwSwapBuffers(window);
-			glfwPollEvents();
-		} else {
-			auto& application = entityManager.last<Application>();
-			application.running = false;
-			entityManager.destroy(entity);
-			glfwTerminate();
 		}
+
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+
+        SystemManager::getInstance().onRenderer();
+
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+
+        glfwSwapBuffers(window);
+        glfwPollEvents();
 	});
+}
+
+void Blast2D::WindowSystem::onDestroy() {
+    glfwTerminate();
 }

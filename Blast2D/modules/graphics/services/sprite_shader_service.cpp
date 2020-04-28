@@ -1,3 +1,4 @@
+#include <modules/graphics/components/camera.hpp>
 #include "sprite_shader_service.hpp"
 
 void Blast2D::SpriteShaderService::setTexture(const Shader& shader, const int texture) {
@@ -58,4 +59,16 @@ Blast2D::Shader Blast2D::SpriteShaderService::compile() {
 		"} ";
 
 	return ShaderService::compile(vertex, fragment);
+}
+
+void Blast2D::SpriteShaderService::setCamera(Blast2D::Shader &shader, const Blast2D::Entity entity) {
+    if (shader.camera == NULL_ID) {
+        shader.camera = entity;
+
+        EntityManager::getInstance().on<CameraEvent>([this, &shader](CameraEvent& cameraEvent){
+            if (cameraEvent.entity == shader.camera) {
+                this->setTransform(shader, cameraEvent.transform);
+            }
+        });
+    }
 }

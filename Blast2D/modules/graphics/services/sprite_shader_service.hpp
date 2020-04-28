@@ -21,6 +21,7 @@ namespace Blast2D {
 		void setColor(const Shader& shader, const Color& color);
 		void setViewport(const Shader& shader, const Vector2& vector);
 		void setTransform(const Shader& shader, const Matrix4& matrix4);
+		void setCamera(Shader& shader, const Entity entity);
 		Shader compile();
 	private:
 		SpriteShaderService(){}

@@ -18,3 +18,9 @@ void Blast2D::SystemManager::onRenderer() {
 	}
 }
 
+void Blast2D::SystemManager::onDestroy() {
+    for (auto& systemInfo : systems) {
+        systemInfo.second.system->onDestroy();
+    }
+}
+

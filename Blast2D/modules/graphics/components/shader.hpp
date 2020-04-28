@@ -8,6 +8,7 @@ namespace Blast2D {
 
 	struct Shader {
 		GLuint ID;
+		Entity camera = NULL_ID;
 	};
 
 	BLAST_COMPONENT(Shader);

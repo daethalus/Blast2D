@@ -12,7 +12,9 @@ namespace Blast2D {
 		virtual void onCreate() override;
 
 		virtual void onUpdate() override;
-	};
+
+        void onDestroy() override;
+    };
 
 	BLAST_SYSTEM(WindowSystem);
 }

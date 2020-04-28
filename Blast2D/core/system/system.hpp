@@ -17,7 +17,8 @@ namespace Blast2D {
     class BaseSystem {
     public:
         EntityManager& entityManager = EntityManager::getInstance();
-        virtual void onCreate() {};        
+        virtual void onCreate() {};
+        virtual void onDestroy() {};
     };
 
 	class Renderer {
@@ -62,6 +63,7 @@ namespace Blast2D {
 		void onUpdate();
 		void onCreate();
 		void onRenderer();
+        void onDestroy();
 
 		template<typename Sys>
 		static bool registerSystem(std::string name);

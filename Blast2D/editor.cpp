@@ -16,6 +16,7 @@
 #include <core/math/matrix4.hpp>
 
 #include <modules/game/components/tile_map.hpp>
+#include <modules/graphics/components/camera.hpp>
 
 INITIALIZE_EASYLOGGINGPP
 
@@ -32,33 +33,10 @@ struct Container {
     int z;
 };
 
-struct Test {
-    int value;
-};
-
 int main() {
 
     Blast2D::SystemManager &systemManager = Blast2D::SystemManager::getInstance();
     Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
-
-    entityManager.on<Test>([](Test&test) {
-        LOG(INFO) << "fired 1 " << test.value;
-    });
-
-    entityManager.on<Test>([](Test&test) {
-        LOG(INFO) << "fired 2 " << test.value;
-    });
-
-    entityManager.on<Test>([](Test&test) {
-        LOG(INFO) << "fired 3 " << test.value;
-    });
-
-    entityManager.on<Test>([](Test&test) {
-        LOG(INFO) << "fired 4 " << test.value;
-    });
-
-    Test t  = {1};
-    entityManager.emit<Test>(t);
 
     LOG(INFO) << "Starting engine";
 
@@ -70,39 +48,41 @@ int main() {
             Blast2D::Application{true}
     );
 
-//    entityManager.create(Blast2D::World{});
+    auto cameraEntity = entityManager.create(Blast2D::Camera{});
 
     systemManager.onCreate();
 
-//    auto& sp = Blast2D::SpriteShaderService::getInstance();
-//
-//    auto shader = sp.compile();
-//    sp.apply(shader);
-//    sp.setTransform(shader, Blast2D::Matrix4(1));
-//    sp.setViewport(shader, { 1920, 1017});
-//    sp.setTexture(shader, 0);
-//    sp.setColor(shader, { 255,255,255,255 });
-//
-//	auto& imageService = Blast2D::ImageService::getInstance();
-//
-//    auto img = imageService.loadImage("test-engineer.png");
-//    Blast2D::SpriteSheetBuilder spriteSheetBuilder;
-//    imageService.pack(spriteSheetBuilder, *img);
-//    auto spriteSheet = imageService.buildSpriteSheet(spriteSheetBuilder);
-//
-//	Blast2D::SpriteBatchService sbp;
-//	//auto mesh = Blast2D::Mesh();
-//
-//	auto entity = entityManager.create();
-//	entityManager.set<Blast2D::Shader>(entity, shader);
-//
-//    auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
-//    mesh.spriteSheet = spriteSheet;
-//    Blast2D::Transform transform = {{100,100,1},{500,500},0};
-//    sbp.draw(mesh,spriteSheet->sprites.front(),transform);
+    auto& sp = Blast2D::SpriteShaderService::getInstance();
+
+    auto shader = sp.compile();
+    sp.apply(shader);
+    sp.setTransform(shader, Blast2D::Matrix4(1));
+    sp.setViewport(shader, { 1920, 1017});
+    sp.setTexture(shader, 0);
+    sp.setColor(shader, { 255,255,255,255 });
+    sp.setCamera(shader, cameraEntity);
+
+	auto& imageService = Blast2D::ImageService::getInstance();
+
+    auto img = imageService.loadImage("test-engineer.png");
+    Blast2D::SpriteSheetBuilder spriteSheetBuilder;
+    imageService.pack(spriteSheetBuilder, *img);
+    auto spriteSheet = imageService.buildSpriteSheet(spriteSheetBuilder);
+
+	Blast2D::SpriteBatchService sbp;
+	//auto mesh = Blast2D::Mesh();
+
+	auto entity = entityManager.create();
+	entityManager.set<Blast2D::Shader>(entity, shader);
+
+    auto&mesh = entityManager.assign<Blast2D::Mesh>(entity);
+    mesh.spriteSheet = spriteSheet;
+    Blast2D::Transform transform = {{100,100,1},{500,500},0};
+    sbp.draw(mesh,spriteSheet->sprites.front(),transform);
 
     auto &application = entityManager.last<Blast2D::Application>();
     do {
         systemManager.onUpdate();
     } while (application.running);
+    systemManager.onDestroy();
 }
