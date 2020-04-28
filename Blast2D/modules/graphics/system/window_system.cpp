@@ -7,6 +7,7 @@
 
 #include <core/logging/easylogging++.h>
 #include <core/components/application.hpp>
+#include <core/input/input.hpp>
 
 #include <modules/graphics/components/window.hpp>
 #include <modules/graphics/components/shader.hpp>
@@ -61,6 +62,12 @@ void Blast2D::WindowSystem::onCreate() {
 			auto & wp = em.last<WindowProperties>();
 			wp.size = { (float) width , (float)height };
 		});
+
+        input.registerKeyListener([this, window](Keys key) {
+            auto ikey = static_cast<int>(key);
+            int intState = glfwGetKey(window, ikey);
+            return static_cast<KeyState>(intState);
+        });
 
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();

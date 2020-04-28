@@ -33,6 +33,7 @@ struct Container {
 };
 
 int main() {
+
     Blast2D::SystemManager &systemManager = Blast2D::SystemManager::getInstance();
     Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
 
