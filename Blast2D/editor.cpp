@@ -47,7 +47,7 @@ int main() {
             Blast2D::Application{true}
     );
 
-    entityManager.create(Blast2D::World{});
+//    entityManager.create(Blast2D::World{});
 
     systemManager.onCreate();
 

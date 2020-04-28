@@ -15,15 +15,10 @@ add_subdirectory(core/system)
 add_subdirectory(modules/graphics)
 
 add_executable (Blast2D "editor.cpp" project.rc)
-add_executable (Blast2D_Server "server.cpp" project.rc)
 
 target_link_libraries(Blast2D core-logging-lib)
 target_link_libraries(Blast2D core-system-lib)
 
-target_link_libraries(Blast2D_Server core-logging-lib)
-target_link_libraries(Blast2D_Server core-system-lib)
-
 add_blast_module(module-graphics-lib)
 
 target_compile_features("Blast2D" PRIVATE cxx_std_17)
-target_compile_features("Blast2D_Server" PRIVATE cxx_std_17)
