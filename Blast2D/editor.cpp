@@ -32,11 +32,33 @@ struct Container {
     int z;
 };
 
+struct Test {
+    int value;
+};
+
 int main() {
 
     Blast2D::SystemManager &systemManager = Blast2D::SystemManager::getInstance();
     Blast2D::EntityManager &entityManager = Blast2D::EntityManager::getInstance();
 
+    entityManager.on<Test>([](Test&test) {
+        LOG(INFO) << "fired 1 " << test.value;
+    });
+
+    entityManager.on<Test>([](Test&test) {
+        LOG(INFO) << "fired 2 " << test.value;
+    });
+
+    entityManager.on<Test>([](Test&test) {
+        LOG(INFO) << "fired 3 " << test.value;
+    });
+
+    entityManager.on<Test>([](Test&test) {
+        LOG(INFO) << "fired 4 " << test.value;
+    });
+
+    Test t  = {1};
+    entityManager.emit<Test>(t);
 
     LOG(INFO) << "Starting engine";
 

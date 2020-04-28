@@ -15,6 +15,15 @@
 
 namespace Blast2D {
 
+    struct Object {
+        Index index;
+    };
+
+    template<typename Type>
+    struct EventStorage : Object {
+        std::vector<std::function<void(Type&)>> events;
+    };
+
 	class EntityManager {
 	private:
 
@@ -23,6 +32,8 @@ namespace Blast2D {
 		EntityIdPool entityIdPool;
 
 		mutable std::vector<PoolData> pools{};
+
+        mutable std::vector<std::unique_ptr<Object>> objects{};
 
 		template<typename Type>
 		Storage<Type>& assure() const {
@@ -34,6 +45,15 @@ namespace Blast2D {
 		template<typename Type>
 		Storage<Type>& assure(const Index index) const {
 			return static_cast<Storage<Type>&>(*pools[index].pool);
+		}
+
+        template<typename Type>
+		Type& assureObject(){
+            const auto index = TypeInfo<Type>::index(objects.size());
+            if(index == objects.size()) {
+                objects.push_back(std::make_unique<Type>());
+            }
+            return static_cast<Type&>(*objects[index]);
 		}
 
 	public:
@@ -123,6 +143,18 @@ namespace Blast2D {
 		template<typename Type>
 		void remove(const Index index, const Entity entity) {
 			this->assure<Type>(index).destroy(entity);
+		}
+        template<typename Type>
+		void on(std::function<void(Type&)> event) {
+            auto &eventStorage = assureObject<EventStorage<Type>>();
+            eventStorage.events.push_back(event);
+		}
+        template<typename Type>
+		void emit(Type& item) {
+            auto &eventStorage = assureObject<EventStorage<Type>>();
+            for(auto& event : eventStorage.events) {
+                event(item);
+            }
 		}
 
 		template<typename ...Types, typename Func>
