@@ -25,6 +25,8 @@ namespace Blast2D{
         void setPixelColor(unsigned int x, unsigned int y, Image& image, const Color& color);
         Color getPixelColor(unsigned int x, unsigned int y, const Blast2D::Image &image);
     };
+
+    static ImageService& imageService = Blast2D::ImageService::getInstance();
 }
 
 #endif

@@ -1,6 +1,7 @@
 #include "render_system.hpp"
 
 #include <modules/graphics/services/texture_service.hpp>
+#include <modules/graphics/libs/imgui/imgui.h>
 
 void Blast2D::RenderSystem::onUpdate() {
 	entityManager.forEach<Mesh>([this](auto entity, Mesh& mesh) {
@@ -20,4 +21,7 @@ void Blast2D::RenderSystem::onRenderer() {
 		VertexBufferService::getInstance().draw(vertexBuffer);
 	});
 //	auto &window = entityManager.last<WindowProperties>();
+
+    bool* value = new bool;
+    ImGui::ShowDemoWindow(value);
 }

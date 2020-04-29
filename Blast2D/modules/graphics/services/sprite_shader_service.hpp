@@ -25,7 +25,9 @@ namespace Blast2D {
 		Shader compile();
 	private:
 		SpriteShaderService(){}
-	};	
+	};
+
+    static SpriteShaderService& spriteShaderService = SpriteShaderService::getInstance();
 }
 
 #endif // !SPRITE_SHADER_SERVICE_HPP

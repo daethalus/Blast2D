@@ -1,5 +1,9 @@
 #include "system.hpp"
 
+void Blast2D::SystemManager::preInit() {
+
+}
+
 void Blast2D::SystemManager::onCreate() {
 	for (auto& systemInfo : systems) {
 		systemInfo.second.system->onCreate();

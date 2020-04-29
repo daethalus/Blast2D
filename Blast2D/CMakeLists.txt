@@ -14,7 +14,7 @@ add_subdirectory(core/logging)
 add_subdirectory(core/system)
 add_subdirectory(modules/graphics)
 
-add_executable (Blast2D "editor.cpp" project.rc)
+add_executable (Blast2D "main.cpp" "game.hpp" "game.cpp" project.rc)
 
 target_link_libraries(Blast2D core-logging-lib)
 target_link_libraries(Blast2D core-system-lib)

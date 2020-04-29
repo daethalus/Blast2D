@@ -207,6 +207,6 @@ namespace Blast2D {
 			}						
 		}
 	};
-	
+    static EntityManager &entityManager = EntityManager::getInstance();
 }
 #endif

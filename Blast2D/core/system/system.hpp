@@ -60,6 +60,7 @@ namespace Blast2D {
 			return instance;
 		}
 
+		void preInit();
 		void onUpdate();
 		void onCreate();
 		void onRenderer();
@@ -81,7 +82,9 @@ namespace Blast2D {
 			getInstance().renderers[name] = { name, std::static_pointer_cast<Renderer>(pointer), true, 0 };
 		}
 		return true;
-	}	
+	}
+
+    static SystemManager &systemManager = SystemManager::getInstance();
 }
 
 #endif // !SYSTEM_MANAGER_HPP

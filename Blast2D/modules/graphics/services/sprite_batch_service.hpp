@@ -8,9 +8,15 @@
 namespace Blast2D {
 	class SpriteBatchService {
 	public:
+        static SpriteBatchService & getInstance() {
+            static SpriteBatchService spriteBatchService;
+            return spriteBatchService;
+        }
 		void draw(Mesh& mesh);
 		void draw(Mesh& mesh, const Sprite& sprite, const Transform& transform, const Color& color = {255,255,255,255});
 	};
+
+    static SpriteBatchService& spriteBatchService = SpriteBatchService::getInstance();
 }
 
 #endif
