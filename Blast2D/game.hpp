@@ -6,11 +6,9 @@ namespace Blast2D {
     class Game {
     public:
         void run();
+    private:
         void loop();
     };
 }
-
-
-
 
 #endif

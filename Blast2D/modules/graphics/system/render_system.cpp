@@ -22,6 +22,6 @@ void Blast2D::RenderSystem::onRenderer() {
 	});
 //	auto &window = entityManager.last<WindowProperties>();
 
-    bool* value = new bool;
-    ImGui::ShowDemoWindow(value);
+//    bool* value = new bool;
+//    ImGui::ShowDemoWindow(value);
 }

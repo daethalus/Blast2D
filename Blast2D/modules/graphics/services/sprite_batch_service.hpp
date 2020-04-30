@@ -7,6 +7,8 @@
 
 namespace Blast2D {
 	class SpriteBatchService {
+	private:
+	    SpriteBatchService() = default;
 	public:
         static SpriteBatchService & getInstance() {
             static SpriteBatchService spriteBatchService;
