@@ -17,6 +17,7 @@ namespace Blast2D {
     class BaseSystem {
     public:
         EntityManager& entityManager = EntityManager::getInstance();
+        virtual void preInit() {};
         virtual void onCreate() {};
         virtual void onDestroy() {};
     };

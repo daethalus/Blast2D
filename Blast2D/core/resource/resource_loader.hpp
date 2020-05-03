@@ -8,6 +8,7 @@ namespace Blast2D{
     struct ResourceConfigFile {
         std::string module;
         std::string path;
+        std::string folder;
         std::string content;
     };
 

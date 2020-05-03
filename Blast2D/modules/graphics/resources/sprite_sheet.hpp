@@ -7,15 +7,18 @@
 #include <modules/graphics/resources/image.hpp>
 #include <core/math/vector2.hpp>
 #include <core/resource/resource_manager.hpp>
+#include <memory>
+
 
 namespace Blast2D{
     struct BinImg {
         mapbox::Bin* bin;
-        const Image& img;
-        BinImg(mapbox::Bin* _bin, const Image& _img): bin(_bin), img(_img) {}
+        std::shared_ptr<Image> img;
+        BinImg(mapbox::Bin* _bin, std::shared_ptr<Image> _img): bin(_bin), img(_img) {}
     };
 
     struct SpriteSheetBuilder{
+        std::string id;
         mapbox::ShelfPack shelfPack;
         std::vector<BinImg>images;
 

@@ -61,6 +61,9 @@ namespace Blast2D{
             return storage.findResource(resourceId);
         }
 
+
+        std::vector<std::string> getFilesFromFolder(std::string folder);
+
         void load();
 
         void load(std::string baseFolder);

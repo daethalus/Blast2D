@@ -12,14 +12,15 @@
 void Blast2D::Game::run() {
     LOG(INFO) << "Blast2D Initialization";
 
-    resourceManager.load();
-
-    Loader::load();
-
     entityManager.create(WindowProperties{true});
     entityManager.create(Application{true});
 
     systemManager.preInit();
+
+    resourceManager.load();
+
+    Loader::load();
+
     systemManager.onCreate();
 
     this->loop();

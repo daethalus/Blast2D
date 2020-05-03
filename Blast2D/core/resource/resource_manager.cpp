@@ -25,11 +25,19 @@ void Blast2D::ResourceManager::loadDirectory(const std::string module, const fs:
         } else {
             for (const auto& loader: loaders) {
                 if (child.path().extension().string() == "." + loader->fileExtension) {
-                    loader->loadFile({module, child.path().string(), FileUtils::loadTextFile(child.path().string())});
+                    loader->loadFile({module, child.path().string(), entry.path().string(), FileUtils::loadTextFile(child.path().string())});
                 }
             }
         }
     }
+}
+
+std::vector<std::string> Blast2D::ResourceManager::getFilesFromFolder(std::string folder) {
+    std::vector<std::string> files;
+    for (const fs::directory_entry& child : fs::directory_iterator(fs::path(folder))) {
+        files.push_back(child.path().string());
+    }
+    return files;
 }
 
 

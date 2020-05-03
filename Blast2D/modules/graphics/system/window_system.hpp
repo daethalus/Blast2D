@@ -9,7 +9,9 @@ namespace Blast2D {
 	class WindowSystem : public System {
 	public:
 
-		virtual void onCreate() override;
+        void preInit() override;
+
+        virtual void onCreate() override;
 
 		virtual void onUpdate() override;
 
