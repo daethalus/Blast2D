@@ -5,13 +5,34 @@
 #include "resource_loader.hpp"
 #include <unordered_map>
 #include <memory>
+#include <filesystem>
+#include "resource.hpp"
+#include <core/ecs/type_info.hpp>
+#include <assert.h>
+
+#define BLAST_RESOURCE_LOADER(Type, FileType) bool resource_loader_##FileType = Blast2D::ResourceManager::getInstance().registerResourceLoader<Type>(#FileType);
+#define BLAST_RESOURCE(Type) const static bool resource##T = Blast2D::ResourceManager::getInstance().createResource<Type>();
+
+namespace fs = std::filesystem;
 
 namespace Blast2D{
 
     class ResourceManager {
     private:
         ResourceManager() = default;
-        std::unordered_map<std::string,  std::unique_ptr<ResourceLoader>> loaders;
+
+        //TODO - why?
+        inline static std::vector<std::unique_ptr<ResourceLoader>> loaders = std::vector<std::unique_ptr<ResourceLoader>>();
+        inline static  std::vector<std::unique_ptr<ResourceStorage>> resources = std::vector<std::unique_ptr<ResourceStorage>>();
+
+        void loadDirectory(const std::string module, const fs::directory_entry& entry);
+        template<typename Type>
+        ResourceTypeStorage<Type>& assure() {
+            const auto index = TypeInfo<Type>::index(-1);
+            assert(resources.size() > index);
+            return static_cast<ResourceTypeStorage<Type>&>(*resources[index]);
+        }
+
     public:
         static ResourceManager& getInstance() {
             ResourceManager resourceManager;
@@ -19,11 +40,30 @@ namespace Blast2D{
         }
 
         template<typename Type>
-        void registerResourceLoader(std::string fileType) {
-            auto resourceLoader = std::make_unique<Type>();
-            loaders[fileType] = std::static_pointer_cast<Tyoe>(resourceLoader);
+        bool createResource() {
+            TypeInfo<Type>::index(resources.size());
+            resources.push_back({std::unique_ptr<ResourceStorage>{new ResourceTypeStorage<Type>()}});
+            return true;
         }
+
+        template<typename Type>
+        bool registerResourceLoader(std::string fileType) {
+            auto loader = std::make_unique<Type>();
+            loader->fileExtension = fileType;
+            loaders.push_back(std::move(loader));
+            return true;
+        }
+
+
+        template<typename Type>
+        Type& load(std::string resourceId) {
+            auto& storage = assure<Type>();
+            return storage.findResource(resourceId);
+        }
+
         void load();
+
+        void load(std::string baseFolder);
     };
 
     static ResourceManager &resourceManager = ResourceManager::getInstance();

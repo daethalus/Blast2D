@@ -17,7 +17,7 @@ namespace Blast2D {
 	template <typename Type>
 	class Storage : public SparseSet {
 	public:
-		void set(const Entity entity, Type & type) {
+		void set(const Entity entity, Type& type) {
 			if constexpr (std::is_aggregate_v<Type>) {
 				instances.push_back(std::move(type));
 			} else {

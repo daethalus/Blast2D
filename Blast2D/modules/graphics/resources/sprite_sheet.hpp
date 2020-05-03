@@ -6,6 +6,7 @@
 #include <modules/graphics/libs/shelf-pack.hpp>
 #include <modules/graphics/resources/image.hpp>
 #include <core/math/vector2.hpp>
+#include <core/resource/resource_manager.hpp>
 
 namespace Blast2D{
     struct BinImg {
@@ -24,12 +25,15 @@ namespace Blast2D{
             shelfPack = mapbox::ShelfPack(32,32,options);
         }
     };
+
     struct SpriteSheet {
         unsigned int textureId;
         std::vector<Sprite> sprites;
         unsigned int width;
         unsigned int height;
     };
+
+    BLAST_RESOURCE(SpriteSheet)
 }
 
 #endif

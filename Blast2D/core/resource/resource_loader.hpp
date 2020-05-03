@@ -5,8 +5,16 @@
 
 namespace Blast2D{
 
+    struct ResourceConfigFile {
+        std::string module;
+        std::string path;
+        std::string content;
+    };
+
     class ResourceLoader{
-        virtual void loadFile(std::string path) = 0;
+    public:
+        std::string fileExtension;
+        virtual void loadFile(const ResourceConfigFile&& configFile) = 0;
     };
 }
 

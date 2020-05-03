@@ -10,6 +10,7 @@
 #include <core/ecs/sparse_set.hpp>
 #include <core/ecs/storage.hpp>
 #include <core/ecs/view.hpp>
+#include "type_info.hpp"
 
 #define BLAST_COMPONENT(T) const static bool component_##T = Blast2D::EntityManager::getInstance().createComponent<T>()
 

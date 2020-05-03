@@ -5,21 +5,28 @@
 #include <core/ecs/entity_manager.hpp>
 #include <memory>
 
-//TODO
-/* This is just a temporary class that I will use to try to load the content and now exactly what I need to do
- * The idea is to refactor this class to other classes and make something more generic
- *
- *
- * create binder by refection or manual?
- * what I want? some way that I can set and get without having the type using string
- *
- */
+#include <core/resource/resource_loader.hpp>
+#include <core/resource/file_utils.hpp>
+#include <core/libs/json.hpp>
+
+
+
 
 namespace Blast2D {
-    class Loader {
 
+    class SceneLoader : public ResourceLoader{
+    public:
+        void loadFile(const ResourceConfigFile &&configFile) override {
+            LOG(INFO) << "module: " << configFile.module << " file: " << configFile.path << " value from file: " << configFile.content;
+        }
+    };
+
+    BLAST_RESOURCE_LOADER(SceneLoader, scene)
+
+    class Loader {
     public:
         static void load() {
+
         }
     };
 }
