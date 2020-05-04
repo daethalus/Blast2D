@@ -19,6 +19,8 @@ namespace Blast2D{
 
     struct Scene {
         std::vector<SceneItem> items;
+        bool loadOnStart = false;
+        std::string loadWith;
     };
 
     BLAST_RESOURCE(Scene)

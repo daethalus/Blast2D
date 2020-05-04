@@ -1,15 +1,21 @@
 #include "scene_system.hpp"
-
+#include <core/resource/resource_manager.hpp>
 #include <core/logging/easylogging++.h>
+
 void Blast2D::SceneSystem::onCreate() {
-
-    //I need to know what is the default scene.
-    LOG(INFO) << "on create Scene system";
-
+    for (const auto& scene: resourceManager.loadAll<Scene>()) {
+        if (scene.second.loadOnStart){
+            this->loadScene(scene.second);
+        }
+    }
 }
 
 
 void Blast2D::SceneSystem::onUpdate() {
+
+}
+
+void Blast2D::SceneSystem::loadScene(const Blast2D::Scene &scene) {
 
 }
 

@@ -21,6 +21,9 @@ namespace Blast2D{
                 return findResource(resourceId);
             }
         }
+        std::unordered_map<std::string,Type>& findAll() {
+            return resources;
+        }
     };
 
 }

@@ -63,6 +63,13 @@ namespace Blast2D{
             return storage.findResource(resourceId);
         }
 
+        template<typename Type>
+        std::unordered_map<std::string, Type>& loadAll() {
+            auto& storage = assure<Type>();
+            return storage.findAll();
+        }
+
+
 
         std::vector<std::string> getFilesFromFolder(std::string folder);
 

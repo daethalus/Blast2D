@@ -15,6 +15,7 @@ add_subdirectory(game)
 add_subdirectory(modules/graphics)
 
 add_executable (Blast2D "main.cpp" "game.hpp" "game.cpp" project.rc)
+#add_library(Blast2D "game.hpp" "game.cpp")
 
 add_blast_module(core-lib)
 add_blast_module(game-lib)
