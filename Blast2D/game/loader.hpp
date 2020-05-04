@@ -10,18 +10,20 @@
 #include <core/libs/json.hpp>
 
 
+#include <game/loaders/scene_loader.hpp>
+#include <game/systems/scene_system.hpp>
 
 
 namespace Blast2D {
 
-    class SceneLoader : public ResourceLoader{
-    public:
-        void loadFile(const ResourceConfigFile &&configFile) override {
-            LOG(INFO) << "module: " << configFile.module << " file: " << configFile.path << " value from file: " << configFile.content;
-        }
-    };
+//    class SceneLoader : public ResourceLoader{
+//    public:
+//        void loadFile(const ResourceConfigFile &&configFile) override {
+//            LOG(INFO) << "module: " << configFile.module << " file: " << configFile.path << " value from file: " << configFile.content;
+//        }
+//    };
 
-    BLAST_RESOURCE_LOADER(SceneLoader, scene)
+//    BLAST_RESOURCE_LOADER(SceneLoader, scene)
 
     class Loader {
     public:

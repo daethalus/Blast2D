@@ -1,6 +1,5 @@
 ﻿cmake_minimum_required (VERSION 3.8)
 
-
 project(core-lib)
 
 file(GLOB_RECURSE core-src

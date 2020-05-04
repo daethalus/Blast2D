@@ -9,9 +9,10 @@
 #include "resource.hpp"
 #include <core/ecs/type_info.hpp>
 #include <assert.h>
+#include <core/logging/easylogging++.h>
 
-#define BLAST_RESOURCE_LOADER(Type, FileType) bool resource_loader_##FileType = Blast2D::ResourceManager::getInstance().registerResourceLoader<Type>(#FileType);
-#define BLAST_RESOURCE(Type) const static bool resource##T = Blast2D::ResourceManager::getInstance().createResource<Type>();
+#define BLAST_RESOURCE_LOADER(Type, FileType) inline const bool resource_loader_##Type = Blast2D::ResourceManager::getInstance().registerResourceLoader<Type>(#FileType);
+#define BLAST_RESOURCE(Type) inline const static bool resource##T = Blast2D::ResourceManager::getInstance().createResource<Type>();
 
 namespace fs = std::filesystem;
 
@@ -23,7 +24,7 @@ namespace Blast2D{
 
         //TODO - why?
         inline static std::vector<std::unique_ptr<ResourceLoader>> loaders = std::vector<std::unique_ptr<ResourceLoader>>();
-        inline static  std::vector<std::unique_ptr<ResourceStorage>> resources = std::vector<std::unique_ptr<ResourceStorage>>();
+        inline static std::vector<std::unique_ptr<ResourceStorage>> resources = std::vector<std::unique_ptr<ResourceStorage>>();
 
         void loadDirectory(const std::string module, const fs::directory_entry& entry);
         template<typename Type>
@@ -35,7 +36,7 @@ namespace Blast2D{
 
     public:
         static ResourceManager& getInstance() {
-            ResourceManager resourceManager;
+            static ResourceManager resourceManager;
             return resourceManager;
         }
 
@@ -48,6 +49,7 @@ namespace Blast2D{
 
         template<typename Type>
         bool registerResourceLoader(std::string fileType) {
+            LOG(INFO) << "Resource loader loaded: " << typeid(Type).name() <<  " file type: " << fileType;
             auto loader = std::make_unique<Type>();
             loader->fileExtension = fileType;
             loaders.push_back(std::move(loader));

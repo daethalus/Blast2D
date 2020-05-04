@@ -1,7 +1,0 @@
-{
-    "root" : [
-        {"Transform" :{"x": 10, "y" : 10, "z" : 7}, "Sprite" : {"sprite-sheet":"game-test:character", "id":"game-test:warrior"}},
-        {"Transform" :{"x": 14, "y" : 14, "z" : 7}, "Sprite" : {"id":"game-test:warrior"}},
-        {"Transform" :{"x": 10, "y" : 14, "z" : 7}, "Sprite" : {"id":"game-test:worker"}}
-    ]
-}

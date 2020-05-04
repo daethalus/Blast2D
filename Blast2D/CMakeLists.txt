@@ -11,13 +11,13 @@ function(add_blast_module name)
 endfunction()
 
 add_subdirectory(core)
-#add_subdirectory(game)
+add_subdirectory(game)
 add_subdirectory(modules/graphics)
 
 add_executable (Blast2D "main.cpp" "game.hpp" "game.cpp" project.rc)
 
 add_blast_module(core-lib)
-#add_blast_module(game-lib)
+add_blast_module(game-lib)
 add_blast_module(module-graphics-lib)
 
 target_compile_features("Blast2D" PRIVATE cxx_std_17)

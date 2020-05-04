@@ -10,7 +10,7 @@
 
 #include <core/logging/easylogging++.h>
 
-#define BLAST_SYSTEM(T) bool system_##T = Blast2D::SystemManager::registerSystem<T>(#T)
+#define BLAST_SYSTEM(T) inline const static bool system_##T = Blast2D::SystemManager::registerSystem<T>(#T)
 
 namespace Blast2D {
 

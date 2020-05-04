@@ -1,15 +1,20 @@
 #include "resource_manager.hpp"
 #include "file_utils.hpp"
-#include <core/logging/easylogging++.h>
 
 void Blast2D::ResourceManager::load() {
-    this->load("C:/dev/Blast2D/resources");
+    this->load("C:/dev/resources");
 }
 
 void Blast2D::ResourceManager::load(std::string baseFolder) {
     LOG(INFO) << "ResourceManager Initialization base folder(" << baseFolder << ")";
 
     auto resourceDirectory = fs::directory_entry(fs::path(baseFolder));
+
+    if (!resourceDirectory.exists()) { //FIXME - this is not working
+        LOG(INFO) << " the directory " << baseFolder << " don't exist";
+        return;
+    }
+
     for (const fs::directory_entry& child : fs::directory_iterator(resourceDirectory)) {
         if (fs::is_directory(child)) {
             auto fileName = child.path().stem().string();

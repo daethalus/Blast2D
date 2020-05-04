@@ -4,6 +4,8 @@
 #include <core/math/vector3.hpp>
 #include <core/math/vector2.hpp>
 
+#include <core/ecs/entity_manager.hpp>
+
 namespace Blast2D{
 
     struct Transform {
@@ -11,7 +13,7 @@ namespace Blast2D{
         Vector2 size;
         int rotation;
     };
-
+    BLAST_COMPONENT(Transform);
 }
 
 #endif
