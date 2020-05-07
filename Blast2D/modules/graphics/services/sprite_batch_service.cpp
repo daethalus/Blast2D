@@ -1,4 +1,5 @@
 #include "sprite_batch_service.hpp"
+#include <modules/graphics/components/sprite.hpp>
 
 void Blast2D::SpriteBatchService::draw(Mesh &mesh) {
     float x = 100.0f;

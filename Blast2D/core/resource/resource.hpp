@@ -16,13 +16,17 @@ namespace Blast2D{
             auto resource = resources.find(resourceId);
             if (resource != resources.end()) {
                 return resource->second;
-            } else {
-                resources[resourceId] = std::forward<Type>({});
-                return findResource(resourceId);
             }
+            std::string err = "resource " + resourceId + " not found";
+            throw new std::exception(err.c_str());
         }
         std::unordered_map<std::string,Type>& findAll() {
             return resources;
+        }
+
+        template<typename... Args>
+        void emplace(std::string resourceId, Args&&... args) {
+            resources.emplace(std::make_pair(resourceId, Type{std::forward<Args>(args)...}));
         }
     };
 

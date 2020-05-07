@@ -16,6 +16,12 @@ namespace Blast2D{
             static const Index constIndex = index;
             return constIndex;
         }
+
+        static Index resource(Index resource) {
+            static const Index constResource = resource;
+            return constResource;
+        }
+
         static Index index() {
             return index(0);
         }

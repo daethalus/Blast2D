@@ -2,15 +2,16 @@
 #define BLAST2D_SPRITE_SHEET_HPP
 
 #include <vector>
-#include <modules/graphics/components/sprite.hpp>
 #include <modules/graphics/libs/shelf-pack.hpp>
 #include <modules/graphics/resources/image.hpp>
 #include <core/math/vector2.hpp>
 #include <core/resource/resource_manager.hpp>
 #include <memory>
 
+namespace Blast2D {
 
-namespace Blast2D{
+    struct Sprite;
+
     struct BinImg {
         mapbox::Bin* bin;
         std::shared_ptr<Image> img;
@@ -31,7 +32,7 @@ namespace Blast2D{
 
     struct SpriteSheet {
         unsigned int textureId;
-        std::vector<Sprite> sprites;
+        std::vector<std::string> sprites;
         unsigned int width;
         unsigned int height;
     };

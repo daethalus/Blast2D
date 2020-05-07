@@ -2,15 +2,17 @@
 #include "texture_service.hpp"
 #include <modules/graphics/libs/stb_image.h>
 #include <core/logging/easylogging++.h>
+#include <modules/graphics/components/sprite.hpp>
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include <modules/graphics/libs/stb_image_write.h>
 #include <assert.h>
 
-std::shared_ptr<Blast2D::Image> Blast2D::ImageService::loadImage(std::string path) {
+std::shared_ptr<Blast2D::Image> Blast2D::ImageService::loadImage(std::string name, std::string path) {
     int width, height, nrChannels;
     unsigned char* data = stbi_load(path.c_str(), &width, &height, &nrChannels, 0);
 	assert(data != nullptr);
-    return std::make_shared<Image>(width, height, nrChannels, data, path);
+	LOG(INFO) << "Image " << name << " loaded";
+    return std::make_shared<Image>(width, height, nrChannels, data, path, name);
 }
 
 void Blast2D::ImageService::pack(SpriteSheetBuilder &spriteSheetBuilder, std::shared_ptr<Image> image) {
@@ -59,8 +61,7 @@ void Blast2D::ImageService::saveFileFromImage(std::string path, const Blast2D::I
 
 void Blast2D::ImageService::updateSpriteSheet(Blast2D::SpriteSheet &spriteSheet,
                                               const Blast2D::SpriteSheetBuilder &spriteSheetBuilder) {
-
-    Image image(spriteSheetBuilder.shelfPack.width(),spriteSheetBuilder.shelfPack.height(),4, nullptr, spriteSheetBuilder.id + ".png");
+    Image image(spriteSheetBuilder.shelfPack.width(),spriteSheetBuilder.shelfPack.height(),4, nullptr, "", ""); // FIXME - add name and path to a possible saving
     spriteSheet.width = image.width;
     spriteSheet.height = image.height;
     for (const auto& binImg : spriteSheetBuilder.images){
@@ -70,7 +71,8 @@ void Blast2D::ImageService::updateSpriteSheet(Blast2D::SpriteSheet &spriteSheet,
                                     this->getPixelColor(sourceX, sourceY, *binImg.img));
             }
         }
-        spriteSheet.sprites.emplace_back(Rect{binImg.bin->x,binImg.bin->y,binImg.bin->w,binImg.bin->h});
+        resourceManager.emplace<Sprite>(image.name, Rect{binImg.bin->x,binImg.bin->y,binImg.bin->w,binImg.bin->h}, spriteSheet);
+        spriteSheet.sprites.emplace_back(image.name);
     }
     this->saveFileFromImage(image.path, image);
     auto& textureService = Blast2D::TextureService::getInstance();

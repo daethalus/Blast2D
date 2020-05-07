@@ -12,7 +12,7 @@
 #include <core/logging/easylogging++.h>
 
 #define BLAST_RESOURCE_LOADER(Type, FileType) inline const bool resource_loader_##Type = Blast2D::ResourceManager::getInstance().registerResourceLoader<Type>(#FileType);
-#define BLAST_RESOURCE(Type) inline const static bool resource##T = Blast2D::ResourceManager::getInstance().createResource<Type>();
+#define BLAST_RESOURCE(Type) inline const static bool resource##Type = Blast2D::ResourceManager::getInstance().createResource<Type>();
 
 namespace fs = std::filesystem;
 
@@ -29,7 +29,7 @@ namespace Blast2D{
         void loadDirectory(const std::string module, const fs::directory_entry& entry);
         template<typename Type>
         ResourceTypeStorage<Type>& assure() {
-            const auto index = TypeInfo<Type>::index(-1);
+            const auto index = TypeInfo<Type>::resource(-1);
             assert(resources.size() > index);
             return static_cast<ResourceTypeStorage<Type>&>(*resources[index]);
         }
@@ -42,7 +42,7 @@ namespace Blast2D{
 
         template<typename Type>
         bool createResource() {
-            TypeInfo<Type>::index(resources.size());
+            TypeInfo<Type>::resource(resources.size());
             resources.push_back({std::unique_ptr<ResourceStorage>{new ResourceTypeStorage<Type>()}});
             return true;
         }
@@ -63,13 +63,17 @@ namespace Blast2D{
             return storage.findResource(resourceId);
         }
 
+        template<typename Type, typename... Args>
+        void emplace(std::string resourceId, Args&&... args) {
+            auto& storage = assure<Type>();
+            storage.emplace(resourceId, std::forward<Args>(args)...);
+        }
+
         template<typename Type>
         std::unordered_map<std::string, Type>& loadAll() {
             auto& storage = assure<Type>();
             return storage.findAll();
         }
-
-
 
         std::vector<std::string> getFilesFromFolder(std::string folder);
 

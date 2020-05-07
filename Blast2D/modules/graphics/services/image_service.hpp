@@ -19,7 +19,7 @@ namespace Blast2D{
             return imageService;
         }
         void saveFileFromImage(std::string path, const Image& image);
-        std::shared_ptr<Image> loadImage(std::string path);
+        std::shared_ptr<Image> loadImage(std::string name, std::string path);
         void pack(SpriteSheetBuilder &spriteSheetBuilder, std::shared_ptr<Image> image);
         void updateSpriteSheet(SpriteSheet& spriteSheet, const SpriteSheetBuilder &spriteSheetBuilder);
         void setPixelColor(unsigned int x, unsigned int y, Image& image, const Color& color);

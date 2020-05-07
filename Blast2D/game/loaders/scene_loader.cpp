@@ -9,6 +9,7 @@ using json = nlohmann::json;
 void Blast2D::SceneLoader::loadFile(const Blast2D::ResourceConfigFile &&configFile) {
     auto sceneJson = json::parse(configFile.content);
     for (json::iterator it = sceneJson.begin(); it != sceneJson.end(); ++it) {
+        resourceManager.emplace<Scene>(it.key());
         auto& scene = resourceManager.load<Scene>(it.key());
         for (auto& entities: it.value()) {
             SceneItem item;

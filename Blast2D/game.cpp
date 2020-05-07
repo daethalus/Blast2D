@@ -1,7 +1,6 @@
 #include "game.hpp"
 
 #include <core/components/application.hpp>
-#include <core/ecs/entity_manager.hpp>
 #include <core/resource/resource_manager.hpp>
 #include <core/system/system.hpp>
 #include <modules/graphics/components/window.hpp>

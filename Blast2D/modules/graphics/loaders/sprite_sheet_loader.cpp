@@ -14,13 +14,14 @@ void Blast2D::SpriteSheetLoader::loadFile(const Blast2D::ResourceConfigFile &&co
     std::string folder = spriteJson["folder"];
 
     SpriteSheetBuilder spriteSheetBuilder;
-    spriteSheetBuilder.id = name;
+    spriteSheetBuilder.id = configFile.module + ":" + name;
 
     for(const auto & file:  resourceManager.getFilesFromFolder(configFile.folder + "/" + folder)){
-        auto img = imageService.loadImage(file);
+        auto img = imageService.loadImage(configFile.module + ":" + fs::path(file).filename().string(), file);
         imageService.pack(spriteSheetBuilder, img);
     }
 
-    SpriteSheet& spriteSheet = resourceManager.load<SpriteSheet>(configFile.module + ":" +spriteSheetBuilder.id);
+    resourceManager.emplace<SpriteSheet>(spriteSheetBuilder.id);
+    SpriteSheet& spriteSheet = resourceManager.load<SpriteSheet>(spriteSheetBuilder.id);
     imageService.updateSpriteSheet(spriteSheet, spriteSheetBuilder);
 }

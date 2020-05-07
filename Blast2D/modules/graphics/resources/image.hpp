@@ -10,8 +10,9 @@ namespace Blast2D{
         int nrChannels;
         unsigned char* data;
         std::string path;
-        Image(int _width, int _height, int _nrChannels, unsigned char* _data, std::string _path):
-            width(_width), height(_height), nrChannels(_nrChannels), data(_data), path(_path)  {
+        std::string name;
+        Image(int _width, int _height, int _nrChannels, unsigned char* _data, std::string _path, std::string _name):
+            width(_width), height(_height), nrChannels(_nrChannels), data(_data), path(_path), name(_name) {
             if (data == nullptr) {
                 int size = width * height * nrChannels;
                 data = new unsigned char[size];
