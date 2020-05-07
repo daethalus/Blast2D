@@ -1,6 +1,8 @@
 #include "shader_service.hpp"
 #include <core/logging/easylogging++.h>
 
+#include <glad/glad.h>
+
 void Blast2D::ShaderService::apply(const Shader& shader) {
 	//if (shader.ID != ShaderService::activeShader.ID) {
 	//	activeShader = shader;
@@ -9,7 +11,7 @@ void Blast2D::ShaderService::apply(const Shader& shader) {
 	glUseProgram(shader.ID);
 }
 
-Blast2D::Shader Blast2D::ShaderService::compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource) {
+Blast2D::Shader Blast2D::ShaderService::compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource) {
 	GLuint sVertex, sFragment, gShader;
 
 	sVertex = glCreateShader(GL_VERTEX_SHADER);
@@ -52,27 +54,27 @@ Blast2D::Shader Blast2D::ShaderService::compile(const GLchar* vertexSource, cons
 	return shader;
 }
 
-void Blast2D::ShaderService::setInteger(const Shader& shader, const GLchar* name, const int value) {
+void Blast2D::ShaderService::setInteger(const Shader& shader, const char* name, const int value) {
 	glUniform1i(glGetUniformLocation(shader.ID, name), value);
 }
 
-void Blast2D::ShaderService::setVector2(const Shader& shader, const GLchar* name, const Vector2& value) {
+void Blast2D::ShaderService::setVector2(const Shader& shader, const char* name, const Vector2& value) {
 	glUniform2f(glGetUniformLocation(shader.ID, name), value.x, value.y);
 }
 
-void Blast2D::ShaderService::setVector3(const Shader& shader, const GLchar* name, const Vector3& value) {
+void Blast2D::ShaderService::setVector3(const Shader& shader, const char* name, const Vector3& value) {
 	glUniform3f(glGetUniformLocation(shader.ID, name), value.x, value.y, value.z);
 }
 
-void Blast2D::ShaderService::setVector4(const Shader& shader, const GLchar* name, const Vector4& value) {
+void Blast2D::ShaderService::setVector4(const Shader& shader, const char* name, const Vector4& value) {
 	glUniform4f(glGetUniformLocation(shader.ID, name), value.x, value.y, value.z, value.w);
 }
 
-void Blast2D::ShaderService::setMatrix4(const Shader& shader, const GLchar* name, const Matrix4& matrix) {
+void Blast2D::ShaderService::setMatrix4(const Shader& shader, const char* name, const Matrix4& matrix) {
 	glUniformMatrix4fv(glGetUniformLocation(shader.ID, name), 1, GL_FALSE, &matrix.m[0]);
 }
 
-void Blast2D::ShaderService::checkCompileErrors(GLuint object, std::string type) {
+void Blast2D::ShaderService::checkCompileErrors(unsigned int object, std::string type) {
 	GLint success;
 	GLchar infoLog[1024];
 	if (type != "PROGRAM") {

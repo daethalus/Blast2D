@@ -2,9 +2,6 @@
 #define SHADER_SERVICE_HPP
 
 #include <string>
-
-#include <glad/glad.h>
-
 #include <modules/graphics/components/shader.hpp>
 
 #include <core/math/vector2.hpp>
@@ -25,18 +22,18 @@ namespace Blast2D {
 		}
 
 		void apply(const Shader& shader);
-		Shader compile(const GLchar* vertexSource, const GLchar* fragmentSource, const GLchar* geometrySource = nullptr);
+		Shader compile(const const char* vertexSource, const char* fragmentSource, const char* geometrySource = nullptr);
 
-		void setInteger(const Shader& shader, const GLchar* name, const int value);
-		void setVector2(const Shader& shader, const GLchar* name, const Vector2& value);
-		void setVector3(const Shader& shader, const GLchar* name, const Vector3& value);
-		void setVector4(const Shader& shader, const GLchar* name, const Vector4& value);
-		void setMatrix4(const Shader& shader, const GLchar* name, const Matrix4& matrix);
+		void setInteger(const Shader& shader, const char* name, const int value);
+		void setVector2(const Shader& shader, const char* name, const Vector2& value);
+		void setVector3(const Shader& shader, const char* name, const Vector3& value);
+		void setVector4(const Shader& shader, const char* name, const Vector4& value);
+		void setMatrix4(const Shader& shader, const char* name, const Matrix4& matrix);
 	protected:
 		ShaderService() {
 		}
 	private:		
-		void checkCompileErrors(GLuint object, std::string type);
+		void checkCompileErrors(unsigned int object, std::string type);
 	};
 }
 
